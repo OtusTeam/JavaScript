@@ -1,0 +1,276 @@
+Основы Vue
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+React Router
+Optimizations
+Темы предыдущего занятия
+Обратная связь
+Вопросы?
+Пожелания?
+Или что всё хорошо
+Vue
+The Progressive JavaScript Framework
+
+Попрактикуемся работать с библиотекой на простых html страницах
+Разберем особенности шаблонизатора для разработки компонент и приложений
+Попрактикуемся с defineProperty и History API
+Напишем небольшую игру
+
+
+В блоке Vue
+
+Темы
+
+Hello Vue
+MVVM
+Templates
+Цели
+
+Настроить себе окружение, зависимости и библиотеки для создания проектов и работы с Vue
+Создавать приложения с Vue
+
+
+
+Docs
+https://vuejs.org/v2/guide/ Official Guide
+https://vuejs.org/v2/api/ API
+
+
+
+Прогрессивный фреймворк для создания пользовательких интерфейсов. 
+Ядро библиотеки отвечает за презентативный уровень, позволяя использовать другие библиотеки и решения. 
+Vue
+"I figured, what if I could just extract the part that I really liked about Angular and build something really lightweight without all the extra concepts involved?" © Evan You
+История
+Components & Data Binding
+Templates
+Infrastructure
+Documentation 
+Vue vs React
+Flow - расширение JavaScript для статической проверки типов https://flow.org/
+
+
+Technologies
+// @flow
+export function defineReactive ( obj: Object, key: string, val: any, customSetter?: ?Function, shallow?: boolean) { const dep = new Dep()}
+Vuex - библиотека и паттерн проектирования управления состоянием для приложений Vue по аналогии с Flux, Redux и Elm https://vuex.vuejs.org/ 
+Technologies
+vue-router - библиотека для управления и синхронизации состоянием приложения и URL https://router.vuejs.org/ 
+Technologies
+
+<!-- HTML -->
+<script src="https://unpkg.com/vue"></script><div id="app"> <p>{{ message }}</p></div>
+
+// JavaScript
+new Vue({ el: '#app', data: { message: 'Hello Vue.js!' }})
+
+Пример
+Hello Vue.js!
+
+
+
+
+Создать index.html с работающим Vue.js приложением
+Напишите в чат>> Vue.version
+
+Самостоятельная работа
+<!-- HTML -->
+<script src="https://unpkg.com/vue"></script><div id="app"> <p>{{ message }}</p></div>
+
+// JavaScript
+new Vue({ el: '#app', data: { message: 'Hello Vue.js!' }})
+
+
+Vue Instance
+new Vue
+$ - методы и данные инстанса
+
+
+
+let vm = new Vue({ el: '#app', data: { 
+ message: 'Hello Vue.js!' }, 
+ // 
+ // Data Model -> vm.$data
+ // ...})
+
+
+Model View Controller
+(MVC)
+Smalltalk 80
+
+
+
+
+var vm = new Vue({
+ // options
+})
+Model–View–ViewModel
+(MVVM)
+Data Binding
+
+
+
+
+
+ViewModel contains data-transformers that convert Model types into View types, and it contains Commands the View can use to interact with the Model
+MVVM or Presentation Model
+
+Изменить значение message в консоли браузера
+Напишите в чат >> "Готово"
+
+Самостоятельная работа
+let vm = new Vue({ el: '#app', data: { message: 'Hello Vue.js!' }})
+
+
+>> vm.message = 'Test'
+
+Lifecycle
+beforeCreate, created
+beforeMount, mounted
+beforeUpdate, updated
+beforeDestroy, destroyed
+
+
+
+Убедиться что все хуки исполнились (с помощью консоли и $...?)
+
+beforeCreate, created
+beforeMount, mounted
+beforeUpdate, updated
+beforeDestroy, destroyed
+
+Самостоятельная работа
+
+<script src="https://unpkg.com/vue"></script><div id="app"> <p>{{ message }}</p>
+ <p>{{ 
+ message.split('').reverse().join('') 
+ }}
+ </p></div>
+
+new Vue({ el: '#app', data: { message: 'Hello Vue.js!' }})
+
+Templates
+Interpolations
+Expressions
+Methods
+
+
+
+
+<div id="app"> <p v-html=greeting></p></div><script> var app = new Vue({ el: '#app', data: { greeting: '<h2>Welcome to your Vue.js app!</h2>', } })</script>
+Directives
+v-html
+v-bind
+v-on
+
+
+
+
+<div id="app"> <p v-bind:id=greeting>
+ text goes here
+ </p></div><script> var app = new Vue({ el: '#app', data: { greeting: 'test', } })</script>
+Directives
+v-html
+v-bind
+v-on
+
+
+
+
+<div id="app"> <p v-on:click=greeting>
+ text goes here {{text()}}
+ </p></div><script> var app = new Vue({ el: '#app', methods: { greeting: function() {/*...*/}, text: function() {/*...*/}, } })</script>
+Directives
+v-html
+v-bind
+v-on
+
+Самостоятельная работа
+Добавить в приложение обработчик события клика для реверта тайтла
+
+v-on:click=reverseMessage>{{ greeting }}
+
+
+<div id="app"> <p :id=id @click=greeting>
+ text goes here
+ </p></div><script> var app = new Vue({ el: '#app',
+ data: { id: 1 }, methods: { greeting: function() {}, } })</script>
+Shorthands
+v-bind: === :
+v-on: === @
+
+[Chrome] Extension
+Components overview
+Time Travel (vuex)
+DevTools
+Library
+npm install vue
+CLI
+npm install vue-clinpx vue
+
+Install
+
+Установить vue-cli
+
+Создать и запустить hello-vue
+Напишите в чат >> "Готово"
+Самостоятельная работа
+# dependencies
+npm install vue-cli -g
+vue --version # copy2chat
+# new hello-vue application
+npx vue init webpack hello-vue 
+# start
+cd hello-vuenpm installnpm run dev # copy2chat port number
+
+
+
+Folders " Structure
+ build/ # output
+ ...
+ config/
+ index.js # main project config
+ ...
+ src/
+ main.js # app entry file
+ App.vue # main app component
+ components/ # ui components
+ ...
+ static/ # pure static assets 
+ test/
+ index.html # index.html template
+ package.json
+ README.md 
+
+.vue 
+
+
+
+Установить DevTools
+Самостоятельная работа
+# gotohttps://github.com/vuejs/vue-devtools#installation # install browser extension
+# open Developer Tools with hello-vue
+# select HelloWorld component
+# copy2chat data msg property
+
+Закончить установку зависимостей и запустить примеры
+Самостоятельная работа
+
+Самостоятельная работа в блоке
+Single Page Application игра "Устный счет". Игра состоит из двух экранов - на первом экране пользователь выбирает настройки, которые будут использовать в игре - типы вычислений, сложность, время раунда. На этой же странице показывается статистика тренировок. Вторая страница - сама игра. Пользователь должен решить максимальное количество задач на заданное время.
+Самостоятельная работа в блоке
+На занятии
+
+Установили окружение, зависимости и библиотеки для создания проектов и работы с Vue
+Попробовали создавать приложения с Vue
+Modern JavaScript Frameworks
+
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

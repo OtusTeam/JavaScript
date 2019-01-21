@@ -1,0 +1,345 @@
+Компоненты, шаблоны
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+Hello Vue
+MVVM
+Templates
+Темы предыдущего занятия
+Темы
+
+Templates
+Components
+Цели
+
+Понимать синтаксис шаблонизатора Vue
+
+Создавать компоненты, описывать их атрибуты и методы
+
+
+
+
+Docs
+https://vuejs.org/v2/guide/components.html Official Guide
+https://vuejs.org/v2/api/ API
+
+
+
+
+<script src="https://unpkg.com/vue"></script><div id="app"> <p>{{ message }}</p>
+ <p>{{ 
+ message.split('').reverse().join('') 
+ }}
+ </p></div>
+
+new Vue({ el: '#app', data: { message: 'Hello Vue.js!' }})
+
+Templates
+Interpolations
+Expressions
+Directivesv-on @v-bind :
+ ...
+
+
+
+<div v-if="type === 'A'"> A</div><div v-else-if="type === 'B'"> B</div><div v-else-if="type === 'C'"> C</div><div v-else> Not A/B/C</div>
+Conditions
+v-if 
+v-else 
+v-else-if 
+
+
+
+<template v-if="loginType === 'username'"> <label>Username</label> <input placeholder="Enter your username"></template><template v-else> <label>Email</label> <input placeholder="Enter your email"></template>
+Conditional groups
+template внутри структурных директив 
+
+
+
+<p v-show="isOk"> Show is ok!
+</p>
+Show
+v-show скрывается в DOM 
+
+
+
+Создать приложение с условным синтаксисом v-if, template
+Добавить кнопку с v-on для изменения состояния шаблона
+Самостоятельная работа
+
+<div class="static"
+ v-bind:class="{ active: isActive, 'text-danger': hasError }"
+ v-bind:class="classObject"
+ v-bind:class="[activeClass, errorClass]"
+ v-bind:class="[isActive ? activeClass : '', errorClass]"
+ v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"
+ v-bind:style="styleObject"></div><!-- <div class="static active"></div> -->
+
+Class and Style Bindings
+v-bind:class иv-bind:styleиспользуют специальный синтаксис для массивов и объектов
+
+
+
+<div class="static"
+ <!-- 1 --> v-bind:class="{ active: isActive, 'text-danger': hasError }"
+ <!-- 2 --> v-bind:class="classObject"
+ <!-- 3 --> v-bind:class="[activeClass, errorClass]"
+ <!-- 4 --> v-bind:class="[isActive ? activeClass : '', errorClass]"
+ <!-- 5 --> v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"
+ <!-- 6 --> v-bind:style="styleObject"></div><!-- <div class="static active"></div> -->
+
+Задача
+Привести пример data для каждого варианта
+
+
+
+<li v-for="message in messages"> {{ message.text }}</li><li v-for="value in object"> {{ value }}</li><div v-for="(value, key, index) in object"> {{ index }}. {{ key }}: {{ value }}</div><div v-for="item in items" :key="item.id"> <!-- content --></div>
+List Rendering
+v-for inитерирование
+:key для идентификации элементов
+ 
+
+
+
+<!-- 1 -->
+<li v-for="message in messages"> {{ message.text }}</li>
+<!-- 2 --><li v-for="value in object"> {{ value }}</li>
+<!-- 3 --><div v-for="(value, key, index) in object"> {{ index }}. {{ key }}: {{ value }}</div>
+<!-- 4 --><div v-for="item in items" :key="item.id"> <!-- content --></div>
+Задача
+Привести пример data для каждого варианта
+
+
+
+<span v-for="n in 10">{{ n }} </span><template v-for="item in even(numbers)"> <li>{{ item.msg }}</li> <li class="divider"></li></template><li v-for="todo in todos" v-if="!todo.isComplete"> {{ todo }}</li><my-component v-for="item in items" :key="item.id"></my-component>
+List Rendering
+n in 10 серия
+Использование methods
+template как в v-if
+
+v-for приоритетнее
+ 
+
+
+
+Overridden Methods
+push()
+pop()
+shift()
+unshift()
+splice()
+sort()
+reverse()
+ 
+
+
+vm.items[3] = 5vm.items.length = 4vm.b = 2
+
+vm.set
+Для манипуляции данными
+vm.set(target, key, value)
+vm.delete(target, key)
+ 
+
+
+
+Создать приложение с данными items: [/* any items */] Использовать v-for для вывода значений на экран
+Добавить @click для изменения элементов массива на любое значение
+Напишите в чат >> "Готово"
+Самостоятельная работа
+Decompose application 
+
+Encapsulate code & logic
+
+
+Components
+
+Components
+Vue.component('my-component', {
+ // options
+ template: "<div>A custom component!</div>"
+})
+
+new Vue({
+ el: '#example'
+})
+
+
+Declare components before initialize
+
+
+Вопрос
+Какое содержимое элемента#example?
+
+Vue.component('my-component', {
+ // options
+ template: "<div>A custom component!</div>"
+})
+
+new Vue({
+ el: '#example'
+})
+
+<div id="example">
+<!-- ??? --> 
+</div>
+
+
+
+
+Ответ
+Vue.component('my-component', {
+ // options
+ template: "<div>A custom component!</div>"
+})
+
+new Vue({
+ el: '#example'
+})
+
+<div id="example">
+<my-component></my-component> 
+</div>
+
+
+
+
+
+Какое содержимое элемента#example?
+
+
+Вопрос
+
+Кто знает что такоеslot?
+
+
+Slot
+slot - место для Вашего контента в компоненте
+
+<alert-box> Something bad happened.</alert-box>
+
+Vue.component('alert-box', { template: ` <div class="demo-alert-box"> <strong>Error!</strong> <slot></slot> </div> `})
+
+
+Slot
+Множество именованых slot полей
+
+<base-layout> <template slot="header"> <h1>Here might be a page title</h1> </template> <p>A paragraph for the main content.</p> <p>And another one.</p> <template slot="footer"> <p>Here's some contact info</p> </template></base-layout>
+
+
+
+Slot
+Множество именованых slot полей с нормальными тэгами
+
+<base-layout> <h1 slot="header">
+Here might be a page title
+ </h1> <p>A paragraph for the main content.</p> <p>And another one.</p> <p slot="footer">
+Here's some contact info
+ </p></base-layout>
+
+
+
+Props
+Vue.component('blog-post', {
+ props: ['title'],
+ template: '<h3>{{ title }}</h3>'
+})
+
+<my-component title="Some Title">
+</my-component><my-component v-for="item in items" 
+v-bind:title="item">
+</my-component>
+
+Передача данных из приложения
+v-bind для динамических данных
+To be continued...
+
+
+Создать Vue приложение с данными links: [/* any url */] 
+Сделать компонент my-link, который получает свойство url и выводит элемент <a href="...">...</a>
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Methods
+// ...methods: {
+ plus: function () {
+ return 123
+ }
+}
+
+// ...
+<component>{{plus()}}</component>
+Декларация методов в свойстве methods
+
+
+Для предыдущего примера приложения с ссылками добавить метод makeUrlReadable в элемент my-link 
+При отрисовке приложения ссылки должны показываться с текстом и настоящим urlhttp://vuejs.org/guide/ => <a href=http://vuejs.org/guide/> vuejs guide</a>
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Global vs Local
+var Child = {
+ template: '<div>A custom component!</div>'
+}
+
+new Vue({
+ // ...
+ components: {
+ 'my-component': Child
+ }
+})
+"Скрытые" компоненты
+
+
+$emit
+<!-- my-component template --><button v-on:click="$emit('my-event')">
+ Some text
+</button>
+<!-- my-component usage -->
+<my-component 
+ v-on:my-event="myMethod">
+</my-component>
+$emit - служебная функция для отправки сообщений
+this.$emit для методов
+
+Events vs Props
+Передача данных сверху вниз
+Отправка сообщений из дочерних элементов
+
+Для предыдущего примера приложения с ссылками добавить отправку события приложению при клике на ссылку
+Используйтеthis.$emit для отправки сообщения иevent.preventDefault() для отмены стандартного действия
+Напишите в чат >> "Готово"
+Самостоятельная работа
+Сделать приложение для показа дерева элементов с помощью компонент tree и leaf 
+
+{ id: 1, items: [{ id: 2, items: [{ id: 3 }] }]}
+
+Самостоятельная работа
+Для предыдущего задания сделать обновление данных по временному интервалу
+
+
+
+Самостоятельная работа
+На занятии
+
+Разобрали базовый синтаксис шаблонизатора Vue
+
+Потренировались создавать компоненты, описывать их атрибуты и методы
+Modern JavaScript Frameworks
+
+
+Самостоятельная работа в блоке
+Single Page Application игра "Устный счет". Игра состоит из двух экранов - на первом экране пользователь выбирает настройки, которые будут использовать в игре - типы вычислений, сложность, время раунда. На этой же странице показывается статистика тренировок. Вторая страница - сама игра. Пользователь должен решить максимальное количество задач на заданное время.
+Самостоятельная работа в блоке
+
+Подготовить общую структуру приложения - компоненты контейнеры для страниц приложения
+Создать компоненты - кнопки и расположить их для второй страницы - игры
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

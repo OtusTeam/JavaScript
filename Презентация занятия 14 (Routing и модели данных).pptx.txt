@@ -1,0 +1,358 @@
+Модели и формы
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+Templates
+Components
+Темы предыдущего занятия
+Темы
+
+Computed & Watchers
+Forms
+Props
+Цели
+
+Работать с Object.defineProperty, computed, watchers
+Создавать формы, связывая шаблоны с моделями
+
+
+
+
+Docs
+https://vuejs.org/v2/guide/computed.html Official Guide
+https://vuejs.org/v2/api/ API
+
+
+
+
+Создать Vue приложение с данными links: [/* any url */] 
+Вывести ссылки с url<a href="...">...</a>
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Computed
+computed описывает вычисляемые getters
+
+new Vue({ el: '#app', data: { message: 'Hello Vue.js!' }, computed: {
+ reversedMessage: function () {
+ return
+this.message
+.split('')
+.reverse()
+.join('')
+ }
+ }})
+
+
+Использовать computed в инстансе Vue для данных links из задания предыдущего урока. Вычисляемые значения должны возвращать названия для urlhttp://vuejs.org/guide/ => vuejs guide
+В консоли измените значение links - данные должны измениться
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Computed vs Methods
+computed знает зависимости вычисляемой сущности
+
+new Vue({ el: '#app', data: { message: 'Hello Vue.js!' }, computed: {
+ reversedMessage: function () {
+ return
+this.message
+.split('')
+.reverse()
+.join('')
+ }
+ }})
+
+
+Object.defineProperty
+obj - объект применения
+prop - имя свойста
+descriptor - описание свойства
+
+
+var obj = {}
+var descriptor = { /* TBD */ }Object.defineProperty(
+ obj, 
+ 'prop', 
+ descriptor
+)
+
+
+Descriptors
+configurable,enumerable,value,writableсвойства доступа
+
+
+Object.defineProperty(obj, 'prop', { 
+ configurable: false,
+})
+Object.defineProperty(obj, 'prop', { 
+configurable: true 
+})
+
+Uncaught TypeError: Cannot redefine property: prop1
+
+Descriptors
+configurable,enumerable,value,writableсвойства
+get,set - функции доступа
+
+
+var descriptor = { 
+ get: function() { return 1 },
+ set: function() {},
+ value: 2,
+}
+
+Uncaught TypeError: Invalid property descriptor. Cannot both specify accessors and a value or writable attribute, #<Object>
+
+
+Использовать Object.defineProperty с дескрипторами get, set для хранения и получения значений объектаa.b // 1a.b = 4 // 1 + 4a.b // 5
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Dependency Tracker
+Vue использует getters, setters для инверсии зависимостей данных
+
+Object.defineProperty(obj, key, {
+ enumerable: true,
+ configurable: true,
+ get: function reactiveGetter () {
+ const value = getter ? getter.call(obj) : val
+ if (Dep.target) {
+ dep.depend()
+ if (childOb) {
+ childOb.dep.depend()
+ if (Array.isArray(value)) {
+ dependArray(value)
+ }
+ }
+ }
+ return value
+ },
+ // ...
+})
+
+defineReactive определяет свойства объекта data
+
+function defineReactive (obj, key, val) { Object.defineProperty (obj, key, { get: function () { return val }, set: function (newValue) { val = newValue } })}
+// ->
+defineReactive(person, 'age', 25)
+defineReactive
+
+defineComputed для computed свойств
+
+Dep - трекер зависимостей
+
+function defineComputed(
+obj, key, 
+computeFunc, updateCallback
+) { var onDependencyUpdated = function () { // ... } Object.defineProperty (obj, key, { get: function () { Dep.target = onDependencyUpdated; var value = computeFunc (); Dep.target = null; }, // ... })}
+defineComputed
+
+person.age = 22defineComputed ( person, 'status', function () { if (person.age > 18) { return 'adult' } }, function (newValue) { console.log ("has changed to", newValue) }})console.log ("Status is ", person.status)
+С помощью getters, setters можно вычислить зависимости свойств
+Все вместе
+
+Watchers
+watch -явное создание descriptors подобных observers 
+
+var vm = new Vue({
+ el: '#demo',
+ data: {
+ firstName: 'Foo',
+ lastName: 'Bar',
+ fullName: 'Foo Bar'
+ },
+ watch: {
+ firstName: function (val) {
+ this.fullName = val + ' ' + this.lastName
+ },
+ lastName: function (val) {
+ this.fullName = this.firstName + ' ' + val
+ }
+ }
+})
+
+Использовать watch в инстансе Vue для данных links. Вычисляемые значения должны возвращать названия для urlhttp://vuejs.org/guide/ => vuejs guide
+В консоли измените значение links - данные должны измениться
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Watch Options
+immediate
+deep
+multi handlers
+hierarchy
+
+watch: {
+ a: function (newVal, oldVal) {/*...*/},
+ b: 'someMethod',
+ c: {
+ handler: function (val, oldVal) {/*...*/},
+ deep: true,
+ immediate: true
+ },
+ d: [
+ function handle1 (val, oldVal) {/*...*/},
+ function handle2 (val, oldVal) {/*...*/}
+ ],
+ 'e.f': function (val, oldVal) {/*...*/}
+}
+ 
+
+$watch
+$watch -системный метод инстанстов (как в angular) 
+
+vm.$watch('someObject', callback, {
+ deep: true
+})
+
+var unwatch = vm.$watch(
+ function () {
+ return this.a + this.b
+ },
+ function (newVal, oldVal) {
+ // do something
+ }
+)
+
+unwatch()
+
+
+
+<input v-model="message">
+<p>Message is: {{ message }}</p>
+
+
+
+
+// ...
+data: {
+ message: 'testME'
+}
+Forms
+v-model организует two-way data binding для input, textarea элементов 
+
+
+
+Создать форму с элементами checkbox, input[type=number]привязанную к модели данных Vue.
+Вывести значения модели отдельно от формы
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+<input
+ type="checkbox"
+ v-model="toggle"
+ true-value="yes"
+ false-value="no">
+
+<input type="radio" v-model="pick" v-bind:value="a">
+
+<input v-model.number="age" type="number">
+<input v-model.trim="msg">
+<input v-model.lazy="msg" >
+
+Специальные возможности Forms
+true-value, false-value
+v-bind:value
+Модификаторы .lazy, .number, .trim
+
+
+
+Props
+Передача данных сверху вниз
+Отправка сообщений из дочерних элементов
+
+v-bind для динамических и для "нестроковых" данных 
+Props
+Vue.component('blog-post', {
+ props: ['postTitle'],
+ template: '<h3>{{ postTitle }}</h3>'
+})
+
+<blog-post post-title="hello!"></blog-post>
+<blog-post v-bind:title="myData"></blog-post>
+<blog-post v-bind:ids="[0, 1]"></blog-post>
+
+
+
+v-bind линеаризует свойства переданного объекта
+Props
+post: {
+ id: 1,
+ title: 'My Journey with Vue'
+}
+
+<blog-post v-bind="post"></blog-post>
+<blog-post
+ v-bind:id="post.id"
+ v-bind:title="post.title"
+></blog-post>
+
+
+
+
+Props
+Модификация props данных в дочерних компонентах не разрешена
+
+Props Validation
+Декларация в свойсте props формата json-schema
+props: {
+ propA: Number,
+ propB: [String, Number],
+ propC: {
+ type: String,
+ required: true
+ },
+ propD: {
+ type: Number,
+ default: 100
+ },
+ }
+
+
+Composite Validations
+validator для специальных проверочных функций
+props: {
+ propE: {
+ type: Object,
+ default: function () {
+ return { message: 'hello' }
+ }
+ },
+ propF: {
+ validator: function (value) {
+ return ['success', 'warning', 'danger'].indexOf(value) !== -1
+ }
+ }
+ }
+
+
+Для примера из предыдущей работы с формой checkbox, input[type=number] - вынести форму в отдельный компонент- передать конфигурацию формы из родителя используя props
+Напишите в чат >> "Готово"
+Самостоятельная работа
+Сделать приложение для показа дерева элементов с помощью компонент tree и leaf 
+
+{ id: 1, items: [{ id: 2, items: [{ id: 3 }] }]}
+
+Самостоятельная работа
+Для предыдущего задания сделать обновление данных по временному интервалу
+
+
+
+Самостоятельная работа
+На занятии
+
+Разобрались с Object.defineProperty, computed, watchers
+Попробовали создвать формы, добавлять валидаторы
+
+Modern JavaScript Frameworks
+
+Создать первую страницу приложения - форму настроек
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

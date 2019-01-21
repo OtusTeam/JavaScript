@@ -1,0 +1,259 @@
+Advanced Vue
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+
+Computed & Watchers
+Forms
+Props
+Темы предыдущего занятия
+Цели
+
+Описывать routing для Vue приложений
+Понимать и использовать нативный браузерный History и Location API
+
+
+
+Темы
+
+Location
+Routing
+Vue-router
+
+Docs
+https://developer.mozilla.org/en-US/docs/Web/API/History_API History API
+https://router.vuejs.org/ Vue Router
+
+
+
+
+$emit
+<a v-on:click.stop="doThis"></a>
+
+<form v-on:submit.prevent="onSubmit"></form>
+
+<a v-on:click.stop.prevent="doThat"></a>
+
+<form v-on:submit.prevent></form>
+
+<div v-on:click.capture="doThis">...</div>
+
+<div v-on:click.self="doThat">...</div>
+
+.stop
+.prevent
+.capture
+.self
+.once
+.passive 
+
+Routing
+Routing это управление и синхронизация адресной строки браузера и состояния приложения
+
+
+window.location
+window.location, document.location возвращают объект Location, который содержит информацию о локации текущего документа
+
+
+Location
+href - содержит полный URL (Uniform Resource Locator)
+protocol - то, что стоит перед «:»
+host, hostname - доменное имя
+port - строка с номером порта
+pathname, search, hash - части url
+
+
+Вопрос
+http://localhost:8000/123/asd?test=456#789Чему соответствуют значения в URL
+href
+protocol
+host, hostname
+port
+pathname, search, hash?
+
+Uniform Resource Identifier
+ foo://example.com:8042/over/there?name=ferret#nose \_/ \______________/\_________/ \_________/ \__/ " " " " " scheme authority path query fragment " _____________________"__ / \ / \ urn:example:animal:ferret:nose
+
+ 
+ https://tools.ietf.org/html/rfc3986 
+
+Создать простое Vue приложение с несколькими страницами, которое при инициализации будет перенаправлять пользователя на одну из них в зависимости от URL
+
+Подсказка - использовать component, v-if для страниц и location для "редиректа"
+Напишите в чат >> "Готово"
+Самостоятельная работа
+Статический шаблон с v-if
+
+<div id="app"> <home v-if="route === 'home'"></home> <about v-else-if="route === 'about'">
+ </about> <not-found v-else><not-found></div>
+// ... //
+data: { href: window.location.href},computed: { route () { return routes[this.href] "" 'not-found' }}
+Демо
+
+Location Methods 
+assign() - загрузить документ по данному URL
+reload() - перезагрузить страницу
+replace() - заменить текущий документ 
+
+
+window.history
+window.history возвращает объект History, который содержит API для манипуляции браузерной истории сессии
+
+
+Свойства History
+state содержит состояние текущего url
+
+length количество записей
+
+
+History API
+pushState(), replaceState() - управление историей
+go(), back(), forward() - навигация по истории
+state - текущий состояние
+
+
+History Events
+hashchange - вызывается на window когда hash изменяется
+popstate - вызывается на window когда история навигации изменяется
+
+
+В предыдущее приложение добавить обработчики hashchange, popstate, которые будут триггерить перерисовку страниц приложения
+Напишите в чат >> "Готово"
+Самостоятельная работа
+Что-нибудь необычное?
+
+var vue = new Vue({ el: '#app', data: { currentRoute: window.location.href }, computed: { ViewComponent () { return routes[this.currentRoute] "" NotFound } }, render (createElement) { 
+return createElement(this.ViewComponent) 
+ }})window.onhashchange = function() { vue.currentRoute = window.location.href;}window.onpopstate = function() { vue.currentRoute = window.location.href;}
+
+Демо
+render() - позволяет описывать шаблон на языке JavaScript или jsx
+
+render: function(createElement) {
+ return createElement('div', {
+ on: {
+ 'click': this.update,
+ },
+ }, this.table.map(row => {
+ if(typeof row === 'object') {
+ return createElement('tree', {
+ attrs: {
+ table: row,
+ }
+ })
+ }
+
+ return createElement('leaf', {
+ attrs: {
+ index: row,
+ }
+ })
+ }))
+},
+
+Динамическая отрисовка
+
+Создать Vue приложение с данными links: [/* any url */] 
+Вывести ссылки с url используя метод render(createElement)<a href="...">...</a>
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+vue-router
+vue-router официальная библиотека для routing Vue приложений
+https://github.com/vuejs/vue-router
+https://router.vuejs.org/ 
+
+
+vue-router features
+Иерархический route/view mapping
+Модульная компонентная конфигурация
+Кастомные параметры
+Анимированные переходы / скролл / hash / ...
+
+Что общего с React?
+
+<div id="app"> <h1>Hello App!</h1> <p> <router-link to="/foo">Go to Foo</router-link> <router-link to="/bar">Go to Bar</router-link> </p> <router-view></router-view></div><script> const Foo = { template: '<div>foo</div>' } const Bar = { template: '<div>bar</div>' } const routes = [ { path: '/foo', component: Foo }, { path: '/bar', component: Bar }, ] const router = new VueRouter({}) const app = new Vue({ el: '#app',
+router, })</script>
+
+Пример
+
+Создать простое приложение с несколькими страницами
+Использовать vue-router для навигации<script src="https://unpkg.com/vue-router"></script>
+
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Route params
+$router доступен внутри компонента и позволяет узнать параметры
+
+const router = new VueRouter({ routes: [ { path: '/user/:id', component: User } ]})
+
+const User = { template: `<p>User 
+{{ $route.params.id }}
+</p>`
+}
+
+Nested routes
+router-view и children для вложенных URL
+
+const router = new VueRouter({ routes: [{ 
+path: '/user/:id', 
+component: User, 
+ children: [{
+ path: 'settings', 
+component: Settings
+}]
+ }]})
+
+const User = { template: `<p>User 
+{{ $route.params.id }}
+<router-view></router-view>
+</p>`
+}
+
+С помощью router-view и children для предыдущего примера добавить еще один уровень иерархии на страницы
+Напишите в чат >> "Готово"
+Самостоятельная работа
+
+Другие возможности
+Программное управление URL
+History API
+...
+
+router.push({ 
+name: 'user', 
+params: { userId: 123 }
+})
+
+// ... //
+const router = new VueRouter({ mode: 'history', routes: [...]})
+
+
+На занятии
+
+Попрактиковались в описании routing для Vue приложений
+Использовали History и Location API
+
+Что не успели в блоке
+
+Tests
+Vuex
+Flow
+Server-side Rendering
+Plugins
+Filters
+Custom Directives
+Modern JavaScript Frameworks
+
+Настроить routing для страниц
+Сделать простой переход от страницы настройки к игре и обратно
+Доделать максимально возможно игру
+Самостоятельная работа
+Как Вам Vue?
+Как сравнить Vue с React?
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

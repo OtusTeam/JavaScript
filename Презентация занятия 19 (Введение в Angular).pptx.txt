@@ -1,0 +1,325 @@
+Введение в Angular
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+
+Темы предыдущего занятия
+HTML Templates
+Polymer Templates
+ES6 Template Literals
+Data Binding
+Polymer Overview
+Modern JavaScript Frameworks
+
+
+О блоке
+Angular
+TypeScript
+Observables
+Testing & Building
+Вопрос
+Что бы Вы хотели узнать об Angular?
+Цели
+
+Настроить себе окружение для работы с TypeScript и Angular
+Подключать и использовать Angular для создания приложений
+Ориентироваться в основных терминах и технологиях, используемых в Angular
+
+
+
+
+Темы
+
+Введение
+Hello Angular
+Основы Angular
+
+Docs
+https://angular.io/docs Official Documentation - Guides & API
+https://egghead.io/courses/get-started-with-angularGet Started with Angular 
+
+About
+Angular combines declarative templates, dependency injection, end to end tooling, and integrated best practices to solve development challenges 
+
+Angular empowers developers to build applications that live on the web, mobile, or the desktop
+© Angular
+
+< Angular>
+
+Прошлое - 2010-2016+ AngularJS
+Настоящее - Angular v2-6
+
+
+
+Powered by Google ©2010-2018 
+
+History
+
+Technologies
+This documentation assumes that you are already familiar with JavaScript, and some of the tools from the latest standards such as classes and modules... Most Angular code can be written with just the latest JavaScript, using types for dependency injection, and using decorators for metadata 
+© Angular
+
+Самостоятельная работа
+Установить TypeScript 
+npm install -g @typescript
+tscecho "console.log('hello typescript')" > index.tstsc index.tsnode index.js
+
+tsc --version # copy2chat
+
+
+
+TypeScript
+Superset of JavaScript 
+with optional
+Types
+Classes
+Modules
+
+
+
+https://www.typescriptlang.org/ 
+
+
+Hello Angular
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+ declarations: [
+ AppComponent
+ ],
+ imports: [
+ BrowserModule
+ ],
+ providers: [],
+ bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+Самостоятельная работа
+Установить ng и запустить Hello Angular приложение 
+npm install -g @angular/cli
+ng new my-app
+cd my-app
+ng serve --open
+
+ng --version # copy2chat
+# copy2chat port number 
+
+
+
+
+
+Folders " Structure
+.
+ README.md # cli how-to
+ e2e # end-to-end tests
+ karma.conf.js # unit tests config
+ node_modules # dependencies
+ package.json # npm module config
+ protractor.conf.js # e2e protractor config
+ src # source
+ tsconfig.json # TypeScript config
+ tslint.json # Lint config
+
+
+
+
+Source " Structure
+src
+ app
+ app.component.{ts,html,css,spec.ts}
+ app.module.ts
+ assets
+ environments
+ environment.{ts,prod.ts}
+ favicon.ico
+ index.html
+ main.ts
+ polyfills.ts
+ styles.css
+ test.ts
+ tsconfig.{app.json,spec.json}
+ typings.d.ts
+
+
+"
+"
+" Root component 
+" Root module
+"
+"
+"
+" 
+" Main HTML
+" Main entry point
+"
+"
+"
+"
+ 
+
+
+
+Basics
+Modules - context declaration for related code
+Components - views and business logic
+
+Services - functions & data
+Pipes & Directives - utilities
+
+
+
+angular.module('myModule', []) .value('a', 123) .factory('a', function() { return 123; }) .directive('directiveName', ...) .filter('filterName', ...)
+
+angular.module('heroApp').component('heroDetail', { templateUrl: 'heroDetail.html', controller: HeroDetailController, bindings: { hero: '<', onDelete: '&', onUpdate: '&' }})
+
+AngularJS
+
+
+NgModule
+Configures and organizes related things together
+import { BrowserModule } from 
+'@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+// ...
+@NgModule({
+ declarations: [
+ AppComponent,
+ ],
+ imports: [
+ BrowserModule
+ ],
+ providers: [],
+ bootstrap: [AppComponent],
+ exports: []
+})
+export class AppModule { }
+
+
+Components
+Views and business logic
+import { Component } from '@angular/core';
+
+@Component({
+ selector: 'app-root',
+ templateUrl: './app.component.html',
+ styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+ title = 'app';
+}
+
+
+Services
+Functionality with a purpose that different clients can reuse, together with the policies that should control its usage
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class TranslateService {
+
+ constructor() { }
+
+}
+
+
+Pipes
+Transformationsdeclared in HTML
+import { Pipe, PipeTransform } from 
+'@angular/core';
+
+@Pipe({
+ name: 'tran'
+})
+export class TranPipe implements PipeTransform {
+ transform(value: any, args?: any): any {
+ return null;
+ }
+}
+
+// HTML
+// {{something " tran}}
+
+
+Directives
+Control the appearance or behavior of a DOM element
+import { Directive, ElementRef } 
+from '@angular/core';
+
+@Directive({
+ selector: '[appHighlight]'
+})
+export class HighlightDirective {
+ constructor(el: ElementRef) {
+ el.nativeElement.style.backgroundColor 
+= 'yellow';
+ }
+}
+
+// HTML
+// <p appHighlight>Highlight me!</p>
+
+
+Templates Interpolation
+{﻿{...}}
+<script> 
+assignments (=, +=, -=, ...)
+side effects operators(new ; , ++ -- " &)
+
+
+<h3> {{title}} <img src="{{heroImageUrl}}" 
+ style="height:30px">
+</h3>
+
+
+
+
+{{title}}<span [hidden]="isUnchanged">changed</span>
+
+Demo working with angular-cli
+Add component to the application 
+ng help
+ng generate --help
+ng test
+ng serve --watch
+
+
+
+
+
+Angular components packaged as custom elements, a web standard for defining new html elements in a framework-agnostic way
+Custom Elements
+HTML Templates
+Shadow DOM
+Angular Elements
+
+
+Angular Elements Demo
+https://stackblitz.com/edit/angular-f3nrpv 
+
+
+Angular Material
+https://material.angular.io/guide/getting-started 
+На занятии
+
+Настроили окружение для работы с TypeScript и Angular
+Запустили Hello Angular приложение
+Разобрали назначение основных терминов и технологий, используемых в Angular
+Modern JavaScript Frameworks
+
+Установить все необходимые зависимости для работы с angular - node, npm, tsc, angular-cli
+
+Настройте IDE
+
+Создать простое приложение "Hello Angular" используя angular-cli
+
+Самостоятельная работа
+Что бы Вы хотели узнать об Angular?
+
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

@@ -1,0 +1,241 @@
+Node Best Practices
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+Event Loop
+Timers
+NPM
+Темы предыдущего занятия
+Самостоятельная работа к прошлом занятию
+Создать скрипт tree для вывода списка файлов и папок node_modules.
+Добавить входной параметр - путь до папки
+Добавить возможность выполнять этот скрипт через команду npm run tree -- ...
+Цели
+
+Использовать классы, объекты и функции стандартной библиотеки модуля Streams
+Работать с ошибками при написании серверного JavaScript кода
+
+Темы
+Streams
+Errors & Node Best Practices
+Utils
+
+Docs
+https://nodejs.org/api/stream.html Streams API
+https://github.com/i0natan/nodebestpractices/blob/master/README.md Node Best Practices
+
+
+
+
+
+ 
+
+Абстрактный интерфейс для работы с потоками данных
+
+
+
+
+Streams
+
+
+Что является потоком в Node.js?
+Для чего нужны потоки?
+
+
+
+
+Вопрос
+
+
+Объекты request, response HTTP сервера
+
+const server = http.createServer((req, res) => { res.statusCode = 200 res.end()})
+
+
+
+
+
+Примеры потоков
+
+
+Стандартные потоки ввода-вывода process.stdin, process.stdout
+
+
+
+
+
+
+Примеры потоков
+process.stdin.setEncoding('utf8')process.stdin.on('readable', () => { const chunk = process.stdin.read() if (chunk !== null) { process.stdout.write(`${chunk}`) }})process.stdin.on('end', () => { process.stdout.write('end')})
+
+
+Readable - для чтения
+Writable - для записи
+Duplex - комбинация
+Transform - модификация данных
+
+
+Types of Streams
+
+
+Streams являются EventEmitter
+.on(), .read() для чтения
+
+Readable API
+let body = []request.on('data', (chunk) => { body.push(chunk)}).on('end', () => { body = Buffer.concat(body) .toString()})
+
+
+Является EventEmitter
+.write(), .end() для Writable
+
+Writable API
+response.write('<html>')response.write('<body>')response.write('<h1>Hello, World!</h1>')response.write('</body>')response.write('</html>')response.end()
+
+
+HTTP Server
+const http = require('http')http.createServer((request, response) => { const { headers, method, url } = request let body = [] request.on('data', (chunk) => { body.push(chunk) }).on('end', () => { body = Buffer.concat(body).toString() response.statusCode = 200 response.setHeader('Content-Type', 'application/json') const responseBody = { headers, method, url, body } response.write(JSON.stringify(responseBody)) response.end() })}).listen(8080)
+
+
+
+Что можно добавить?
+
+
+
+Вопрос
+const http = require('http')http.createServer((request, response) => { const { headers, method, url } = request let body = [] request.on('data', (chunk) => { body.push(chunk) }).on('end', () => { body = Buffer.concat(body).toString() response.statusCode = 200 response.setHeader('Content-Type', 'application/json') const responseBody = { headers, method, url, body } response.write(JSON.stringify(responseBody)) response.end() })}).listen(8080)
+Использовать стандартные потоки process.stdin, process.stdout для программы вывода вводимых данных
+
+Самостоятельная работа
+
+
+Buffer / String - стандартно
+Object - опционально с objectMode
+
+const stream = require('stream')const readable = (function() { const data = [] const $ = new stream.Readable({ objectMode: true, read() {} }) $.push({ a: 1 }) return $})()readable.on('data', (data) => { console.log(data)})
+Объекты аргументы
+
+
+new Writable() - конструктор
+class MyWritable extends Writable - класс
+
+
+const stream = require('stream')const writable = (function(){ const data = [] const $ = new stream.Writable({ write(chunk, encoding, callback) { data.push(chunk.toString()) callback() } }) return $})()writable.write('some data')writable.end('done writing data')writable.on('finish', () => { console.log('All writes are now complete.')})
+Создание потоков
+
+
+Readable.pipe() связывает поток, передавая все данные в Writable
+
+readable.on('data', (chunk) => { writable.write(chunk)})readable.on('end', () => { writable.end()})// ->readable.pipe(writable)
+Pipe
+
+
+Buffering
+highWaterMark - размер буфера
+writable.write() - true / false 
+'drain' - событие продолжения
+
+Использовать стандартные потоки иpipe для программы вывода вводимых данных
+
+Самостоятельная работа
+Errors
+
+Стандартные типы ошибок JavaScript
+Системные ошибки при использовании API
+Assertion Error
+Пользовательские ошибки
+
+
+EvalError 
+SyntaxError
+RangeError
+ReferenceError
+TypeError
+URIError
+
+var a = undefinedVariable
+throw new EvalError('error')
+decodeURIComponent('%')
+eval('hoo bar')
+undefinedVariable.not()
+[].length = 'Wat?'
+
+Что к чему относится?
+Вопрос - Стандартные ошибки
+
+Способы обработки ошибок
+try { require('not exist')} catch(e) { debugger;} finally { console.log('go on')}
+try / catch / finally 
+
+callback(error, res)
+.on('error')
+
+
+Вопрос
+try { require('fs')
+ .readdir('not exist', () => { throw new Error('test') })} catch(e) { console.log('error')}
+Что не так?
+
+
+
+Создание ошибок
+Конструктор
+new Error(message)
+Свойства
+error.message
+error.code - строка константа `E_ERROR_TITLE`
+error.stack с Error.captureStackTrace(error)
+
+
+
+Process Events
+EventEmitter
+'error' - всегда определять обработчик
+Process
+'uncaughtException' - возможность последнего слова'unhandledRejection'- необработанные Promise
+
+С помощью process.on('uncaughtException') перехватить и залогировать собственный тип ошибки (без использования конструктора Error, но включая стэк)
+
+Самостоятельная работа
+How To Error
+
+DO use Promises / async / await with catch() 
+DO use Error class
+DO NOT throw 'strings or something'
+DO use central error handling and logging
+DO NOT continue with unknown 'uncaughtException'
+DO 'unhandledRejection' handling
+
+
+Modules
+
+Common
+fs, http, https, net
+process, child_process, cluster
+Utilities
+util, querystring, path 
+System
+os, zlib, vm
+'foo=bar&abc=xyz&abc=123' // => { foo: 'bar', abc: ['xyz', '123'] }
+
+path.join('/foo', 'bar', 'baz/asdf', 'quux', '..')
+На занятии
+
+Работали с классами, объектами и функциями стандартной библиотеки модуля Streams
+Разобрали примеры обработки ошибок при написании серверного JavaScript кода
+Modern JavaScript Frameworks
+
+Написать приложение для работы со стримами: 
+Readable, генерирующий случайные числа, 
+Transformable, добавляющий случайное число к первому и 
+Writable, выводящий в консоль данные.
+Данные должны "течь" readable -> transformable -> writable
+Используйте highWaterMark для примера ограничения внутреннего буффера.
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

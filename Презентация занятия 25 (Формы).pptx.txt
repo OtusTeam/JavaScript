@@ -1,0 +1,434 @@
+Forms
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+
+Темы предыдущего занятия
+Observables in Angular
+Dependency Injection / Service Locator / Inversion of control
+Angular DI Specifics
+Modern JavaScript Frameworks
+
+
+Docs
+https://angular.io/guide/user-input Angular Forms Guide
+
+https://angular-2-training-book.rangle.io/handout/forms/ Forms Rangle.io Angular Training
+
+Создавать формы, используя техники Template-Driven Forms, Reactive Forms
+
+Описывать валидацию и другие функции для элементов форм
+
+
+
+
+
+
+Цели
+
+
+Темы
+Dependency Injectors Hierarchy
+Template-Driven Forms
+
+Reactive Forms
+What will be in a console?
+
+Hint
+const fs = require('fs')
+const file = fs.createWriteStream('example.txt')
+
+file.write('hello, ')
+file.end('world!')
+
+try {
+ file.write('hello, ')
+} catch(e) {
+ console.log('error')
+}
+
+setTimeout(() => {
+ console.log('done')
+})
+
+> 'error'> 'done'
+unless you are using domainswith <=> run()
+
+
+Domain
+const events = require('events')
+const domain = require('domain')
+
+domain.active = domain.create()
+domain.active.on('error', (error) => {
+ setTimeout(() => { throw new Error() })
+})
+events.usingDomains = true// events.jsif (EventEmitter.usingDomains) {
+ // if there is an active domain, then attach to it.
+ domain = domain "" require('domain');
+ if (domain.active && !(this instanceof domain.Domain)) {
+ this.domain = domain.active;
+ }
+}
+
+
+Вопрос
+Как можно разобрать зависимости без специальной нотации для AngularJS? app.controller('DemoController', function ($scope, $http) {
+ $http.get('https://api.github.com/users/angular/repos')
+ .success(function (repos) {
+ $scope.repos = repos;
+ });
+})
+
+Пример
+function doda(a, b, c) { }
+// > undefined
+doda.toString()
+// > "function doda(a, b, c) { }"
+
+
+Вопрос
+Как Angular разбирает зависимости?
+@Component({
+ selector: 'app-root',
+ templateUrl: './app.component.html',
+ styleUrls: ['./app.component.css']
+})export class AppComponent implements OnInit {
+ constructor(private fetch: FetchDataService) {}
+}
+
+
+import "reflect-metadata"
+
+function logParameters(target: any, key: string) {
+ var types = Reflect.getMetadata("design:paramtypes", target, key)
+ var s = types.map(a => a.name).join()
+ console.log(`${key}: ${s}`)
+}
+
+class Foo { }
+interface IFoo { }
+
+class Demo {
+ @logParameters // apply parameter decorator
+ doSomething(
+ param1: string, param2: number, param3: Foo,
+ param4: { test: string }, param5: IFoo,
+ param6: Function, param7: (a: number) => void,
+ ): number {
+ return 1
+ }
+}
+Reflect
+> tsc --experimentalDecorators --emitDecoratorMetadata metadata.ts> node metadata.js> doSomething: String,Number,Foo,Object,Object,Function,Function
+
+
+Entity's
+name
+type
+interfaces
+name and types of the properties
+name and types of the constructor arguments
+
+
+
+var __metadata = (this && this.__metadata) 
+"" function (k, v) {
+ if (
+ typeof Reflect === "object" && 
+ typeof Reflect.metadata === "function"
+ ) return Reflect.metadata(k, v);
+};
+
+__decorate([
+ logParameters, // apply parameter decorator
+ __metadata("design:type", Function),
+ __metadata("design:paramtypes", 
+[String, Number, Foo, Object, Object, Function, Function]),
+ __metadata("design:returntype", Number)
+], Demo.prototype, "doSomething");
+
+Metadata
+reflect-metadata package adds meta informationon a transpile / compile phase
+
+Injectable
+providedIn who will provide an instance 
+
+factory can define any type of a creating function
+@Injectable({
+ providedIn?: Type<any> " 'root' " null
+ factory: () => any
+})
+
+Inject
+when a dependency value isn't a class <=> a string, function, or object dependency
+
+@Inject({ token: any})
+
+import { InjectionToken } from '@angular/core';export const TOKEN = new InjectionToken('desc');
+
+export const TOKEN = new InjectionToken('desc', { providedIn: 'root', factory: () => new AppConfig(), })
+
+constructor(@Inject(TOKEN));
+import { Inject } from '@angular/core';
+constructor(@Inject(Widget) private widget) { }
+
+
+
+import { Component } from '@angular/core';
+import { HeroService } from './hero.service';
+
+@Component({
+ selector: 'app-heroes',
+ providers: [HeroService],
+ template: `
+ <h2>Heroes</h2>
+ <app-hero-list></app-hero-list>
+ `
+})
+export class HeroesComponent { }
+
+
+
+Injector
+is responsible for locating / creating service instances in Angularby providers levels
+root
+module
+component
+
+providers: [Logger]
+// ...
+providers: [{ 
+ provide: Logger, 
+ useClass: Logger 
+}]
+// ...
+
+providers: [{
+ provide: Logger,
+ useValue: {
+ log: () => console.log('I will log')
+ }
+}]
+Providers
+same as providedIn => where and how exactly a service should be provided
+provide - holds the registration token
+useClass - creates and returns new instance
+useValue - a fixed value as the service instance
+useExisting - maps one token to another
+useFactory - creates a dependency object by calling a factory 
+viewProviders - limits the provider to children other than projected content
+Providers Properties
+
+const myServiceFactory = (logger: Logger, userService: UserService) => {
+ return new MyService(logger, userService.user);
+}
+// ...
+const customProvider = {
+ provide: MyService,
+ useFactory: myServiceFactory,
+ deps: [Logger, UserService]
+}
+// ...
+@Component({
+ // ...
+ providers: [myServiceProvider], 
+})
+export class MyComponent { }
+Providers Properties
+provide
+useClass
+useValue
+useExisting
+useFactory
+viewProviders
+
+Angular creates injectors for each component
+Hierarchy
+
+Demo
+We had two components, one service to inject
+specify providers for components
+change providers options to useValue
+why tests are failing?
+
+
+DI 
+Q&A
+
+Forms
+Features
+(events) <=> events binding
+ngModel
+validation
+Solutions
+Template-Driven Forms
+Reactive Forms
+
+
+
+
+
+Template-Driven Forms
+Static forms, models based on html-like Angular templates
+
+
+Create a model class
+Create the form control component
+Create a template with the initial form layout
+Bind data properties to each form control using the ngModel two-way data-binding syntax
+Add a name attribute to each form-input control
+Show and hide validation-error messages
+Handle form submission with ngSubmit
+Disable the form's Submit button until the form is valid
+
+
+ngModel
+import { FormsModule } from '@angular/forms'
+// ...
+
+<form (ngSubmit)="onSubmit()" #myForm="ngForm">
+ <div>
+ <label for="name">Name</label>
+ <input 
+ id="name" 
+ type="text" 
+ [(ngModel)]="user.name"
+ name="name"
+ required>
+ </div>
+ <div>
+ <label for="password">Password</label>
+ <input 
+ id="password"
+ type="password" 
+ [(ngModel)]="user.password"
+ name="password"
+ required>
+ </div>
+ <button type="submit">Submit</button>
+</form>
+import FormsModule
+[(ngModel)] <=> two-way data binding with FormControl
+ngSubmit
+
+
+focus ng-touched /ng-untouched
+changeng-dirty /ng-pristine
+validng-valid / ng-invalid
+
+States
+<input [(ngModel)]="currentHero.name">
+
+<input [value]="currentHero.name" (input)="currentHero.name=$event.target.value">
+
+<input [ngModel]="currentHero.name" (ngModelChange)="currentHero.name=$event">
+
+
+
+
+
+Validation
+<label for="name">Name</label><input id="name" type="text" [(ngModel)]="user.name" name="name" #name="ngModel" required minlength="4" maxlength="24">
+<div *ngIf="name.errors && (name.dirty "" name.touched)"> <div [hidden]="!name.errors.required"> Name is required </div> <div [hidden]="!name.errors.minlength"> Name must be at least 4 characters long. </div> <div [hidden]="!name.errors.maxlength"> Name cannot be more than 24 characters long. </div></div>
+required, minlength, maxlength, ...
+sync / async
+custom
+
+
+Reactive Forms
+Dynamic forms, models described inside code
+
+control 
+sync creation
+Observable
+
+import { FormControl } from '@angular/forms'
+
+<form [formGroup]="userForm" novalidate>
+ <div>
+ <label>Name:
+ <input formControlName="name">
+ </label>
+ </div>
+</form>
+...
+userForm = new FormGroup ({
+ name: new FormControl(),
+ password: new FormControl()
+});
+
+
+Import
+ReactiveFormsModuleng module for reactive forms
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms'; 
+
+import { AppComponent } from './app.component';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+
+@NgModule({
+ declarations: [
+ AppComponent,
+ HeroDetailComponent,
+ ],
+ imports: [
+ BrowserModule,
+ ReactiveFormsModule
+ ],
+ bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+
+
+ReactiveFormsModule
+AbstractControl 
+FormControl single fields
+FormGroup, FormArray groups 
+FormBuilder to rule them all
+
+
+
+import { FormBuilder, Validators } from '@angular/forms'
+// ...
+
+constructor(private formBuilder: FormBuilder) {
+ this.userForm = formBuilder.group({
+ name: new FormControl('', Validators.required),
+ password: new FormControl()
+ })
+}
+
+Demo
+Add template-driven form with ngModel
+
+Add reactive form
+На занятии
+
+Погрузились в особенности шаблона проектирования Dependency Injection
+Разобрали как работать с Template-Driven Forms, Reactive Forms
+
+Описывать валидацию и другие возможности для элементов форм
+
+
+
+
+
+
+Самостоятельная работа
+
+Создать компонент для добавления слова в словарь
+Создать сервис, использующий localStorage и сохранять в нем добавленные слова
+Использовать Translate сервис для перевода слова
+
+
+Modern JavaScript Frameworks
+
+Финальное занятие - 14 июня!
+
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

@@ -1,0 +1,2 @@
+- Add code borders css
+- Add line numbers in syntax highlight

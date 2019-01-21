@@ -1,0 +1,240 @@
+Особенности языка JavaScript
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+
+
+10 лет опыт разработки 
+JavaScript
+Alpari, Comindware, Tinkoff, Backbase, ING
+https://github.com/korzio 
+korzio@gmail.com 
+Преподаватель курса Александр Коржиков
+Modern JavaScript Frameworks
+
+Цели курса
+
+Понимать для чего нужны веб фреймворки
+
+Уметь применять паттерны проектирования (Virtual DOM, Dependency Injection, Observables, Event Loop)
+
+Знать подходы при проектировании, организации, контроля состояния и тестирования приложений
+
+Выбирать подходящие инструменты для проекта
+
+Создавать веб-приложения с использованием современных технологий 
+Modern JavaScript Frameworks
+
+Цели занятия
+
+Познакомиться с преподавателем и с программой курса, понимать как она построена и какие полезные навыки они получат
+Вспомнить и применять основные техники языка JavaScript, которые помогут при изучении фреймворков
+
+Темы занятия
+Типы данных
+Переменные 
+Функции
+Замыкания
+Promise
+
+JavaScript
+ECMAScript 6 (2015)
+
+http://es6-features.org/ (кратко)
+http://exploringjs.com/es6/ (подробно)
+
+Типы данных
+
+typeof typeof null === ?
+
+
+number
+string
+boolean 
+null
+undefined
+object
+
+
+
+Приведение типов
+valueOf
+toString
+
+a == 1 && a == 2 && a == 3 
+=== true // ?
+
+
+
+Приведение типов
+valueOf
+toString
+
+var a = (function(){ var i = 1 return { valueOf: function() { return i++ } }})()
+
+Области видимости 
+var доступны во всем теле функции
+let и const определены в блоке { ... }
+
+Переменные
+
+if (true) { var b = 1}console.log(b) // 1if (!false) { const c = 2;}// console.log(c) // ReferenceError: c is not defined
+Переменные
+
+console.log(b) // undefined// console.log(c)// ReferenceError: c is not definedvar b = 1const c = 2;
+Hoisting 
+var доступны во всем теле функции
+let и const определены после декларации
+
+Переменные
+
+var a = { a }let b = { b }const c = { c }
+Что здесь происходит?
+
+Переменные
+
+var (hoisting)
+let
+const
+
+var a = { a } // Oklet b = { b } // Errorconst c = { c } // Error
+Destructuring 
+Интуитивное определение и присваивание переменных из объектов
+Переменные
+
+var { 
+ op: a, lhs: { op: b } = {} 
+} = {}function h ({ name, val }) { console.log(name, val)}
+Функции
+
+function a() {}
+const a = function () {}const a = () => {}
+
+Контекст исполненияthis
+Arguments
+
+
+
+
+
+Функции
+reduce (
+ [1, 2, 3, 4], // аргументы
+ (a, b) => a + b, // действие
+ 0 // начальное значение
+) // 10
+
+Реализовать функцию reduce - polyfill для Array.prototype.reduce
+
+var obj = { a: function (){ console.log(this.prop) }, prop: 1 } obj.a.prop = 2 obj.a() // ? var fn = obj.afn() // ?
+
+Контекст
+Наследование
+
+var a = { b: 0 }a.__proto__ = { c : 1 }
+
+__proto__ ссылка на объект прототип
+Наследование
+
+var a = Object.create({ c: 1 })a.__proto__ // { c: 1 }
+
+Object.create({ ... })устанавливает аргумент значением __proto__ 
+Наследование
+
+function Fn() {}Fn.prototype = { c: 1 }var a = new Fn()a.__proto__ // { c: 1 }
+
+new Fn() устанавливает __proto__ равным prototype 
+Классы
+
+class Pie { constructor(name) { this.name = name }}class Pizza extends Pie { bake() { super.bake() }}
+
+class«синтаксический сахар» для задания конструктора и прототипа
+Классы
+
+class Pie { constructor(name) { this.name = name }}class Pizza extends Pie { bake() { super.bake() }}
+
+class C 
+[extends P] 
+ 
+constructormethod
+new C() 
+Замыкания
+
+Область видимости определяется функцией
+function outer() { var outerVar var func = function() { var innerVar x = innerVar + outerVar } return func}
+Замыкания
+
+for (var i = 0; i < 10; i++) { setTimeout(function() { console.log(i)
+ }, 1000)
+}
+Что будет в консоли?
+Как это исправить?
+Замыкания
+
+for (let i = 0; i < 10; i++) { setTimeout(function() { console.log(i)
+ }, 1000)
+}
+
+let
+Замыкания
+
+for (var i = 0; i < 10; i++) { setTimeout(function() { console.log(this)
+ }.bind(i), 1000)
+}
+
+bind
+Замыкания
+
+for (var i = 0; i < 10; i++) { setTimeout(function(i) { console.log(i)
+ }.bind(null, i), 1000)
+}
+
+bind
+Promise
+
+
+<pending>
+fulfilled
+rejected
+Техника (шаблон) описания работыасинхронной программы
+Promise
+
+new Promise((resolve, reject) => { setTimeout(
+ () => resolve("Hello"), 500 )})
+
+resolve
+reject
+Promise
+
+Promise.resolve() .then(() => { 
+ throw 'Oh no!' 
+ }) .catch(reason => {
+ console.error(reason) }) .finally(() =>'done')
+
+then
+catch
+finally
+all
+async/await
+Promise
+
+Promise.reject() .catch(() => 2) .then(() => { throw 3 }) .catch(() => 4) .then((a) => console.log(a))
+
+Что будет выведено в консоль?
+На занятии
+
+Познакомились с преподавателем и с программой курса
+Вспомнили и потренировали техники JavaScript - типы данных и переменные , функции и замыкания, Promise
+
+Modern JavaScript Frameworks
+
+https://github.com/ 
+sum(1)(2)(3)....(n)() === 1 + 2 + 3 + ... + n
+promiseReduce([promise0, promise1, promise2], sumFn, 0)
+Object.create
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Спасибо за внимание!

@@ -1,0 +1,249 @@
+Стандартная библиотека Node
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+Что такое Node?
+Modules
+Events
+Темы предыдущего занятия
+Установить зависимости, которые не успели установить на уроке. 
+Запустить локально тестовый Web Server с экземпляром EventEmitter. 
+Написать функцию promisify, которая будет работать со всеми возможными callback функциями библиотек Node.
+Самостоятельная работа к прошлом занятию
+Цели
+
+Ориентироваться в понятии EventLoop и особенностях работы Timers
+Работать с NPM - запускать скрипты, добавлять и управлять зависимостями
+Темы
+Event Loop
+Timers
+NPM
+
+Docs
+https://nodejs.org/en/docs/guides/ Node.js core concepts
+https://docs.npmjs.com/ package manager for javascript
+
+
+
+
+
+Событийно ориентированная парадигма - приложение подписывается на события и когда событие происходит, исполняются 
+обработчики
+Event Driven
+
+
+Timeline
+Event Loop
+JavaScript однопоточный?
+
+
+
+Event Queue
+click
+focus
+mousedown
+
+Вопрос
+console.log('script start')
+setTimeout(function() { console.log('setTimeout')}, 0)
+Promise.resolve().then(function() { console.log('promise1')}).then(function() { console.log('promise2')})
+console.log('script end')
+Что будет выведено в консоль?
+
+
+Демо
+https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/ 
+Tasks, microtasks, queues and schedules© Jake Archibald
+
+
+
+
+
+При старте Node.js инициализируется Event Loop, исполняется переданный скрипт вместе с синхронными вызовами (API, setTimeout, process.nextTick), после чего происходит работа Event Loop
+Event Loop
+
+Пример web сервера
+const http = require('http')const hostname = '127.0.0.1'const port = 3000const server = http.createServer((req, res) => { res.statusCode = 200 res.setHeader('Content-Type', 'text/plain') res.end('Hello World\n')})server.listen(port, hostname, () => { console.log(`Server running at 
+ http://${hostname}:${port}/`)})
+Отложенные / асинхронные callbacks
+В чем преимущество?
+
+server.js
+
+
+События
+while there are still events to process: e = get the next event if there is a callback associated with e: call the callback
+ © libuv
+Файл доступен для чтения
+Время ожидания таймера закончилось
+Что еще?
+
+
+Phases
+Исполнение очереди операций / callbacks на в каждой фазе
+
+
+Phases
+timers - setTimeout, setInterval
+I/O callbacks, close, poll - common callbacks
+check - setImmediate
+idle - system
+
+Timers vs Immediate
+setTimeout(() => { console.log('timeout')}, 0)setImmediate(() => { console.log('immediate')})
+Что будет выведено в консоль?
+
+
+Timers vs Immediate
+const fs = require('fs')fs.readFile(__filename, () => { setTimeout(() => { console.log('timeout') }, 0) setImmediate(() => { console.log('immediate') })})
+Что будет выведено в консоль?
+
+
+Cancel Timers
+const timeoutObj = setTimeout(() => { console.log('timeout')}, 1500)const immediateObj = setImmediate(() => console.log('immediate'))const intervalObj = setInterval(() => { console.log('interval')}, 500)clearTimeout(timeoutObj)clearImmediate(immediateObj)clearInterval(intervalObj)
+Отмена таймеров
+
+.clearTimeout(), .clearInterval(), .clearImmediate()
+
+Cancel Timers
+const timerObj = setTimeout(
+() => { console.log('will i run?')})timerObj.unref()setImmediate(() => { timerObj.ref()})
+Отмена таймеров
+
+.clearTimeout(), .clearInterval(), .clearImmediate()
+.ref(), .unref() 
+
+
+process.nextTick
+console.log('start')process.nextTick(() => { console.log('nextTick')})console.log('scheduled')// start// scheduled// nextTick
+"Наиболее быстрое" исполнение асинхронных операций "вне Event Loop"
+
+
+Вопрос
+const fs = require('fs')setTimeout(() => 
+ console.log('timeout'))setImmediate(() => 
+ console.log('immediate'))
+fs.readFile('./events.js', () => 
+ console.log('fs'))
+Что будет выведено в консоль?
+
+
+Вопрос
+const fs = require('fs')fs.readFile('./events.js', () => { console.log('fs') setTimeout(() => 
+ console.log('timeout')) setImmediate(() => 
+ console.log('immediate'))})
+Что будет выведено в консоль?
+
+
+Вопрос
+const fs = require('fs')setTimeout(() => console.log('timeout out'))setImmediate(() => console.log('immediate out'))fs.readFile('./events.js', (err, data) => { console.log('fs') process.nextTick(() => console.log('next in')) setTimeout(() => console.log('timeout in')) setImmediate(() => console.log('immediate in'))})process.nextTick(() => { console.log('next out') process.nextTick(() => { console.log('next out in') })})
+Что будет выведено в консоль?
+
+Event Loop
+
+NPM
+Package Manager for JavaScript
+CInpm --version
+Registrynpm i
+Website https://npmjs.com/ 
+
+
+В числах
+657 299 пакетов
+Скачиваний
+Вчера - 754 273 706 
+Неделя - 4 647 398 854 
+Месяц - 18 844 709 313
+
+Звезд во Вселенной
+1 000 000 000 000 000 000 000 
+
+
+{ "name": "my_package", "description": "", "version": "1.0.0", "main": "index.js", "scripts": { "test": "echo \"Error: no test specified\" && exit 1" }, "repository": { "type": "git", "url": "https://github.com/.../my_package.git" }, "keywords": [], "author": "", "license": "ISC", "bugs": { "url": "https://github.com/.../my_package/issues" }, "homepage": "https://github.com/.../my_package"}
+
+package.json
+name
+version - semver
+main - файл по умолчанию
+scripts - служебные команды
+
+
+Semantic Versioning
+https://semver.org/ Спецификация
+
+
+https://semver.npmjs.com/ Калькулятор
+
+Самостоятельная работа
+Создать новый npm пакетmkdir ... && cd ... npm init # read & answer
+Сохранить зависимостьnpm install --save-dev ... # copy & paste package.json > chat
+Запустить скриптыecho "" > server.js # create filenpm startnpm test # npm run test
+
+{ "name": "my_package", "description": "", "version": "1.0.0", "main": "index.js", "scripts": { "test": "echo \"Error: no test specified\" && exit 1" }, "repository": { "type": "git", "url": "https://github.com/.../my_package.git" }, "keywords": [], "author": "", "license": "ISC", "bugs": { "url": "https://github.com/.../my_package/issues" }, "homepage": "https://github.com/.../my_package"}
+
+Команды - Демо
+Основные
+init
+install
+start 
+test
+run
+Дополнительные
+ci 
+npx 
+
+
+Dependencies
+dependencies, devDependencies
+флаг --global
+node_modules 
+ "dependencies": {
+ "commander": "^2.7.1",
+ "lodash.get": "^4.0.0",
+ "lodash.isequal": "^4.0.0",
+ "validator": "^9.0.0"
+ },
+ "description": "JSON schema validator",
+ "devDependencies": {
+ "coveralls": "^3.0.0",
+ "grunt": "^1.0.1",
+ "grunt-browserify": "^5.2.0",
+ "grunt-cli": "^1.2.0",
+ "grunt-contrib-copy": "^1.0.0",
+ "grunt-jscs": "^3.0.1",
+ "grunt-lineending": "^1.0.0",
+ "jasmine-node": "^1.14.5",
+ "jasmine-reporters": "^2.2.1",
+ "remapify": "^2.1.0"
+ }
+
+
+Dependencies Structure
+Альтернативы
+yarn
+bower
+turbo
+# A{B,C}, B{C}, C{D}
+A+-- B+-- C+-- D
+
+# A{B,C}, B{C,D@1}, C{D@2}
+A+-- B+-- C `-- D@2+-- D@1
+На занятии
+
+Запускать приложения на платформе Node
+Использовать require и exports для экспорта и импорта зависимостей
+Использовать модуль Events для работы с событиями в Node
+Modern JavaScript Frameworks
+
+Создать скрипт tree для вывода списка файлов и папок node_modules. Вызовы файловой системы должны быть асинхронными. Результатом работы должен быть объект с 2 массивами - files & folders
+Добавить входной параметр - путь до папки
+Добавить возможность выполнять этот скрипт через команду npm run tree -- ...
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

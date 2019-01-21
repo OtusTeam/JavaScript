@@ -1,0 +1,401 @@
+Observables
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+
+Передача данных
+События
+ng-content
+Модули
+Сервисы
+Темы предыдущего занятия
+Modern JavaScript Frameworks
+
+
+Callbacks, Promise, Async / Await
+Observable
+Операции над Observable
+Темы
+
+Docs
+http://reactivex.io/rxjs/manual/overview.html RxJS - Introduction
+
+http://exploringjs.com/es6/ch_generators.html Axel Rauschmayer - Iterators
+
+Отличать основные понятия паттерна - Observable, Observer
+
+Применять шаблон проектирования Observables, используя библиотеку RxJS
+
+
+
+
+
+
+Цели
+
+
+Async Patterns
+
+Callback
+Promise
+Async / Await
+Generator
+Observable
+
+function myFunction(inputValue) {
+ asyncFunc1('value', (err, a) => {
+ if (err) {
+ // handle error
+ } else {
+ asyncFunc2('value', (err, b) => {
+ if (err) {
+ // handle error
+ } else {
+ try {
+ const c = syncFunc3(b)
+ asyncFunc4('value', (err, d) => {
+ if (err) {
+ // handle error
+ } else {
+ callback(null, d)
+ }
+ })
+ } catch (ex) {
+ // handle error
+ }
+ }
+ })
+ }
+ })}
+ 
+
+Native pattern used widely in Node
+
+/* 
+ * "callback hell" "" 
+ * "pyramids of death"
+ */
+Callback
+Object with encapsulated state and API
+
+Promise.resolve(1) // reject() .then((a) => { console.log(a) throw 'Oh no!' }) .catch(reason => { console.error(reason) })
+
+Promise.resolve() .finally(() => 'done')Promise.all([promise, promise2]) .then(() => 'then')
+
+Promise
+<pending>
+fulfilled
+rejected
+
+Execute async code with sync-looking syntax
+async function myFunction(inputValue) {
+ try {
+ const a = await asyncFunc1('value')
+ const b = await asyncFunc2(a)
+ const c = syncFunc3(b)
+ return await asyncFunc4(c)
+ } catch (ex) {
+ // handle exception
+ }
+}
+Async / Await
+
+Generator
+
+Functions which can be exited and later re-entered 
+Their context will be saved across re-entrances
+
+Generator
+
+gen() doesn't execute the body
+next() -> yield 
+({ value, done })
+return
+
+Iterators
+
+to loop over a collection in JavaScript
+
+An iterable is a data structure that wants to make its elements accessible to the publicAn iterator is a pointer for traversing the elements of a data structure
+function* gen() {
+ yield 1
+ yield 2
+ yield 3
+}
+
+var iterable = gen()
+
+for(var iterator of gen()) {
+ console.log(iterator)
+}
+
+// 1
+// 2
+// 3
+
+Iterate
+
+for (const x of ['a', 'b']) {
+ console.log(x)
+}
+// 'a'
+// 'b'
+
+const set = new Set().add('a').add('b')
+for (const x of set) {
+ console.log(x)
+}
+// 'a'
+// 'b'
+
+for-of
+
+Arrays, TypedArrays, arguments
+Strings 
+Maps, Sets
+DOM elements 
+
+Implement
+
+const iterable = {
+ [Symbol.iterator]() {
+ let step = 0
+ const iterator = {
+ next() {
+ if (step <= 2) {
+ step++
+ }
+ switch (step) {
+ case 1:
+ return { value: 'hello', done: false }
+ case 2:
+ return { value: 'world', done: false }
+ default:
+ return { value: undefined, done: true }
+ }
+ }
+ }
+ return iterator
+ }
+}
+-> Symbol.iterator()
+
+-> iterator factory 
+
+-> { next() }
+
+-> ({ value, done })
+Вопрос
+Как можно использовать Generators & Iterators?
+
+Task
+
+Реализовать iterable factorial generator
+
+for(const value of factorial()) {
+ console.log(value)
+ if (value > 2000) break
+}
+
+
+Async Patterns 
+Q&A
+
+
+
+Observable
+const { Observable } = require('rx')
+
+Observable.of('red', 'green', 'blue')
+ .subscribe(color => console.log(color))
+
+Data protocol for processing asynchronous streams
+
+It is particularly effective at modeling streams of data which originate from the environment and are pushed into the application, such as user interface events
+
+https://github.com/tc39/proposal-observable 
+
+
+The Reactive Extensions for JavaScript
+...is a set of libraries to compose asynchronous and event-based programs using observable collections and Array#extras style composition in JavaScript
+
+© Microsoft
+
+RxJS
+<input type="text" id="my">
+<script>
+ Rx.Observable.fromEvent(
+document.getElementById('my'), 
+ 'input',
+ )
+ .subscribe(({ target: { value } }) => {
+console.log(value)
+})
+</script>
+
+
+Main Actors
+Observable - resource or a sequence of values which may be observed
+Observer - receive data from an Observable as an argument to subscribe 
+const source = Observable.range(1, 3)
+
+const subscription = source.subscribe(
+ (x) => console.log('onNext: ' + x),
+ (e) => console.log('onError: ' + e.message),
+ () => console.log('onCompleted')
+)
+
+// => onNext: 1
+// => onNext: 2
+// => onNext: 3
+// => onCompleted
+
+Creating Observables
+Operators that produce new Observables:
+from(...iterable)
+fromEvent
+create(...observe)
+range(n, m)
+timer, interval
+
+
+Observable.from(new Set(['foo', window]))
+.subscribe(observer)
+
+Observable.fromEvent(document, 'click')
+
+Observable.create(function (observer) {
+ observer.onNext(42)
+ observer.onCompleted()
+ return () => console.log('disposed')
+})
+
+Observable.range(0, 3)
+Observable.timer(500, 500)
+Observable.interval(500 /* ms */)
+
+
+
+
+
+
+Marble diagrams
+represents a call to an Observable operator - single value 
+ - transformed
+x - terminates
+" - completed
+
+
+Observable.range(0, 5)
+ .filter(function (x, idx, obs) {
+ return x % 2 === 0
+ })
+ .map(x => x*x)
+ .subscribe(a => console.log(a))
+
+
+Filter and Transform
+filter
+
+map
+
+Question
+Which operator is represented by a given marble diagram?
+
+Demo
+Reduce/Scan operator with in RxJS
+
+
+configure the injector and the compiler and help organize related things together
+
+© Angular
+NgModule
+@NgModule({ providers?: Provider[] declarations?: Array<Type<any> " any[]> imports?: Array<Type<any> " 
+ ModuleWithProviders " any[]> exports?: Array<Type<any> " any[]> entryComponents?: Array<Type<any> " any[]> bootstrap?: Array<Type<any> " any[]> schemas?: Array<SchemaMetadata " any[]> id?: string})
+
+
+NgModule
+describetemplate & injector
+
+identify components, directives & pipes
+
+publish them 4 external components via exports
+add service providers to DI
+
+import { BrowserModule } from 
+'@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+
+@NgModule({
+ declarations: [
+ AppComponent
+ ],
+ imports: [
+ BrowserModule
+ ],
+ providers: [],
+ bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+Services
+Share information among classes that don't know each other
+
+
+import { Injectable } from '@angular/core';@Injectable({ providedIn: 'root',})export class MyService { constructor() { }}
+
+> ng generate service my-service --module=app
+
+
+Inject
+@Injectable({ providedIn: 'root',})
+...
+import { MyService } from './my.service';
+constructor(private myService: MyService) {}
+ngOnInit() { this.myService.get();}
+
+
+Angular Dependency Injection system with provider:
+
+instantiates the
+MyService class 
+...
+
+fetch()
+requests a resource from the network and returns a promise that resolves to the Response object
+
+var myImage = document.querySelector('img')
+var myRequest = new Request('flowers.jpg')
+
+fetch(myRequest).then(function(response) {
+ return response.blob()
+}).then(function(response) {
+ var objectURL = URL.createObjectURL(response)
+ myImage.src = objectURL
+})
+
+Demo
+Создать сервис в Angular, который создает и использует fetch / interval observable
+
+На занятии
+
+Разобрали асинхронные паттерны проектирования в JavaScript
+Познакомились с паттерном Observable и основными понятиями - Observable, Observer
+
+Использовали библиотеку RxJS для примера сервиса в Angular
+
+
+Сделать список слов - Dictionary View
+Создать и добавить сервис для перевода слов https://tech.yandex.com/translate/ 
+Сделать запрос со страницы Dictionary View на Yandex API
+
+Самостоятельная работа
+Modern JavaScript Frameworks
+
+Как Observable?
+
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

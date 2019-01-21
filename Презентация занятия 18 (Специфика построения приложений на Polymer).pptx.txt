@@ -1,0 +1,322 @@
+Специфика построения приложений на Polymer
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+
+Custom Elements
+Shadow DOM
+Темы предыдущего занятия
+Сделать приложение для показа дерева элементов с помощью Custom Elements tree и leaf 
+
+{ id: 1, items: [{ id: 2, items: [{ id: 3 }] }]}
+
+Самостоятельная работа к прошлому занятию
+
+
+Темы
+HTML Templates
+Polymer Templates
+ES6 Template Literals
+Data Binding
+Polymer Overview
+
+Цели
+
+Понимать и работать с веб спецификацией HTML Template
+Использовать Data Binding и другие особенности библиотеки Polymer для разработки приложений
+
+Docs
+Official Documentation
+https://www.polymer-project.org/2.0/docs/devguide/dom-template 
+
+https://www.polymer-project.org/2.0/docs/devguide/data-system 
+
+
+Polymer News
+HTML Imports -> ES Modules 
+Bower -> npm
+Invest in lit-html & LitElement
+Libraries like redux, webpack, rollup
+
+Specifications
+Data Binding enhacements 
+
+https://www.polymer-project.org/blog/2018-05-02-roadmap-update 
+
+
+
+mode
+open
+closed
+
+Shadow DOM
+const host = document.createElement('div')
+const shadowRoot = host.attachShadow
+({ mode: 'open' })
+shadowRoot.innerHTML = `
+<style>h3{ color: red; }</style>
+ <h3>Shadow DOM</h3>
+`
+
+
+
+HTML Template
+"The template element is used to declare fragments of HTML that can be cloned and inserted in the document by script"
+
+© WHATWG
+
+
+
+
+<template id="mytemplate"> <img src="" alt="great image"> <div class="comment"></div></template>
+
+Template element's content is not rendered
+
+
+
+
+
+
+<template>
+
+
+
+const template = document.querySelector('#mytemplate')template.content.querySelector('img').src = 'logo.png'const clone = document.importNode(template.content, true)document.body.appendChild(clone)
+
+document.importNode() creates a new copy of the specified Node
+
+
+importNode
+
+
+
+Content is effectively inert until activated
+Any content within a template won't have side effects
+content is considered not to be in the document
+<template> can be placed anywhere 
+content is documentFragment
+Features
+
+Самостоятельная работа
+Добавить элемент с помощью template на страницу co script внутри, склонировать и добавить копию в документ
+
+<template id="...">...</template>...const cloned = document.importNode(template.content, true)...
+Напишите в чат >> "Готово"
+
+
+
+
+Template & Shadow DOM
+<template id="mytemplate">
+ <style>
+ :host { color: red }
+ </style>
+ <img src="" alt="great image">
+ <div class="comment">that's me</div>
+</template>
+
+const template = document.querySelector('#mytemplate')
+
+const clone = document.importNode(template.content, true)
+const div = document.createElement('div')
+const root = div.attachShadow({ mode: 'open' })
+root.appendChild(clone)
+
+document.body.appendChild(div)
+
+
+Самостоятельная работа
+Для предыдущего задания добавить использование style и Shadow DOM
+
+<template id="mytemplate">
+ <style> /* ... */ </style>
+ <!-- ... -->
+</template>
+// ...
+const root = div.attachShadow({ mode: 'open' })
+
+Переопределить стиль элемента снаружи
+Напишите в чат >> "Готово"
+
+
+HTML Template
+"Templates allow you to declare fragments of markup which are parsed as HTML, go unused at page load, but can be instantiated later on at runtime"
+
+© Eric Bidelman
+
+
+
+
+
+Polymer Templates
+
+<dom-module id="x-foo"> <template>I am x-foo!</template> <script> class XFoo extends Polymer.Element { static get is() { return 'x-foo' } } customElements.define(XFoo.is, XFoo); </script></dom-module>
+
+<dom-module>
+clones template's contents => element's shadow DOM
+
+
+Polymer Templates
+
+class MyElement extends Polymer.Element { static get template() { return Polymer.html`
+ <style>:host { color: blue; }</style> <h2>String template</h2> `; }}
+customElements.define(
+'my-element', 
+MyElement
+)
+<dom-module>
+template => string "" HTMLTemplateElement
+
+
+Combine & inherit templates
+
+class BaseElement extends Polymer.Element { static get template() { return html` <p>BaseElement.</p>` }}class ChildElement extends BaseElement { static get template() { return html` <p>ChildElement</p> <p>${super.template}</p> <p>Hello again from ChildElement.</p> `; }}
+Для использования шаблона родителя можно использовать super.template
+
+
+lit-html
+
+import {html, render} from 'lit-html'const helloTemplate = (name) =>
+html`<div>Hello ${name}!</div>`render(helloTemplate('Steve'), document.body)
+ES6 Template Literal HTML render library "lets you write HTML templates with JavaScript template literals, and efficiently render and re-render those templates to DOM"
+
+
+ES6 Templates literals
+
+console.log(`Fifteen is ${a + b} andnot ${2 * a + b}.`)
+
+function myTag(strings, personExp, ageExp) { var str0 = strings[0] // "that " var str1 = strings[1] // " is a " return str0 + personExp + str1}
+
+var output = myTag`that ${person} is a ${age}`
+
+multiline
+expressions
+tagged
+
+Самостоятельная работа
+Написать tagged template функцию factorial, возвращающую текст выражение первых N чисел факториала
+
+
+factorial`multiply this ${4}` 
+=> `multiply this 1 * 2 * 3 * 4 and get 24`
+
+
+
+lit-html API
+
+import {html, render} from 'lit-html'const helloTemplate = (name) =>
+html`<div>Hello ${name}!</div>`render(helloTemplate('Steve'), document.body)
+
+render( TemplateResult, element)
+html ES6 template tag used => TemplateResult
+
+
+
+Features
+Parse string and create 
+<template>
+
+Nested Nodes
+Async 
+Directives (until, repeat)
+Extend
+
+
+
+
+
+
+const render = () => html` <p> ${until( fetch('content.txt').then((r) => r.text()), html`<span>Loading...</span>`)} </p>`
+
+html`<button class$="primary">Buy Now</button>`
+
+html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
+
+
+
+
+Data System Concepts
+model <=> element properties
+
+local DOM
+
+
+class MyElement extends Polymer.Element {
+ static get is() { return "my-element" }
+ constructor() {
+ super()
+ this.a = 1
+ }
+ static get template() {
+ return `<p>[[a]] [[someProp]]</p>`
+ }
+ static get properties() {
+ return {
+ someProp: {
+ type: String,
+ notify: true,
+ value: 3
+ }
+ }
+ }
+}
+customElements.define(MyElement.is, MyElement)
+
+
+Data System
+Observers
+Computed
+Data bindings
+
+<dom-module id="x-custom"> <template> My name is <span>{{fullName}}</span> </template> <script> Polymer({ is: 'x-custom', properties: { first: String, last: String, fullName: { type: String, computed: 'computeFullName(first, last)' } }, computeFullName: function(first, last) { return first + ' ' + last; } }); </script></dom-module>
+
+
+
+Data Binding API
+target-property="{{hostProperty}}"
+target-property="[[hostProperty]]"
+target-attribute$="[[hostProperty]]"
+<div>{{hostProperty}}</div>
+
+this.set('property.subproperty', 'new value!')// ORthis.property.subproperty = 'new value!'this.notifyPath('property.subproperty')
+Polymer.Element methods
+notifyPath - data by path has changed
+pop, push, splice...
+set, ...
+
+Ideas behind
+Paper components & Material Design
+Custom Elements
+Polyfills performance
+Flaky specifications
+Events workarounds
+A11Y
+Data Binding
+
+Good & Bad Parts
+
+Polyfills performance
+Flaky tools 
+Specifications slowly implemented
+Some things are not components
+Good & Bad Parts
+
+Ideas behind
+Framework agnostic
+Splitted dependencies
+Component based approach
+Data binding + Shadow dom + Styling
+
+На занятии
+
+Попробовали работать с HTML Template, ES6 Template
+Рассмотрели Data Binding и некоторые особенности шаблонизации в Polymer
+Modern JavaScript Frameworks
+
+Как вам Polymer?
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

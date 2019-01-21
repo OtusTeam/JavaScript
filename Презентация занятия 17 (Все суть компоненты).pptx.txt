@@ -1,0 +1,351 @@
+Все суть компоненты
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+
+Введение в Polymer
+Hello Polymer
+Обзор инструментов
+Темы предыдущего занятия
+Самостоятельная работа к прошлом занятию
+Доделать примеры из урока
+Попрактиковаться с polymer-cli
+
+Custom Elements
+Shadow DOM
+Темы
+
+Цели
+
+Понимать и работать с веб спецификациями Shadow DOM и Custom Elements, на базе которых создан Polymer
+
+Docs
+Official Documentation
+https://www.polymer-project.org/2.0/docs/devguide/custom-elements 
+https://www.polymer-project.org/2.0/docs/devguide/shadow-dom 
+
+
+JavaScript Hint
+Constructor magic - Returning An Object From A JavaScript Constructor Functionfunction Person(name, email) { newObj = Object.create(initPerson) initPerson.call(newObj, name, email) return newObj}
+
+new Person() 
+Как это можно использовать?
+https://www.youtube.com/watch?v=9LftCfacTY0 
+
+
+Custom Elements
+"Custom elements provide a way for authors to build their own fully-featured DOM elements"
+
+"A custom element is 
+an element that is custom" 
+ 
+© WHATWG
+
+
+
+Все суть компоненты
+Например, select, input & form
+<select><option value="1">7</option></select>
+Что если нам нужен multi-select?
+<multi-select> <option value="1">8</option> <option value="2">13</option></multi-select>
+
+
+
+
+
+class FlagIcon extends HTMLElement { constructor() { super(); this._countryCode = null; } attributeChangedCallback(name, oldValue, newValue) { this._countryCode = newValue; } connectedCallback() { /* ... */ } get country() { return this._countryCode; } set country(v) { this.setAttribute("country", v); }}
+Пример
+
+
+
+Декларация
+customElements.define("flag-icon", FlagIcon)
+
+// use createElement
+const flagIcon = document.createElement("flag-icon")flagIcon.country = "jp"document.body.appendChild(flagIcon)
+
+// use new
+const flagIcon = new FlagIcon()flagIcon.country = "jp"
+document.body.appendChild(flagIcon)
+// use HTML document 
+
+Самостоятельная работа
+Создать hello-component элемент, который покажет alert на странице
+
+class HelloComponent extends HTMLElement { // ?}
+
+// customElements.define ? 
+
+<!-- ? -->
+
+Задача
+Найти и посмотреть значение display собственного элемента в DOM
+
+
+Напишите в чат >> "Готово"
+
+
+Customized built-in elements
+reuse
+extend
+class PlasticButton extends HTMLButtonElement { constructor() { super() // ... }}
+customElements.define("plastic-button", 
+PlasticButton, { extends: "button" })
+
+document.createElement("button", 
+{ is: "plastic-button" })<button is="plastic-button">Click Me!</button>
+
+
+
+
+
+Самостоятельная работа
+Переиспользовать button
+
+<!-- head -->
+<script>
+class PlasticButton extends HTMLButtonElement { constructor() { super() console.log('button reuse') }}customElements.define("plastic-button", PlasticButton, { extends: "button" })
+</script>
+<!-- body --><button is="plastic-button">Click Me!</button>
+
+
+
+Вопросы
+Как сложно создать собственный button?
+Что будет, если декларировать custom element после его создания?
+
+
+Самостоятельная работа
+Задекларировать my-element после создания
+
+<!-- body --><my-element>Don't Click Me!</my-element>
+<script>
+// ...customElements.define("my-element", /* ... */)
+</script>
+
+Убедиться, что constructor выполнился
+Напишите в чат >> "Готово"
+
+
+LifeCycle
+connectedCallback 
+disconnectedCallback
+attributeChangedCallback
+adoptedCallback => new document
+
+
+
+DOM
+
+
+Compare To Polymer
+TODO
+class HelloWorldElement extends HTMLElement {
+attributeChangedCallback(name, oldValue, newValue) {
+ this._name = newValue
+}
+connectedCallback() {
+ this.name = this.getAttribute('name') "" 'World' 
+}
+get name() {
+ return this._name
+}
+set name(name) {
+ this._name = name
+ this.setAttribute('name', name)
+ this.render()
+}
+render() {
+ this.textContent = `Hello ${this.name}`
+}
+}
+customElements.define('hello-world-element', HelloWorldElement)
+
+
+
+
+
+Custom Elements can be upgraded
+call super()
+work to be deferred to connectedCallback
+constructor for state, default values, event listeners & shadow root
+Features & Requierements
+
+
+Compare To Polymer
+<link rel="import" href="/bower_components/polymer/polymer-element.html"><script> class MyPolymerElement extends Polymer.Element { ... } customElements.define('my-polymer-element', MyPolymerElement);</script>
+
+
+
+
+Polymer Element LifeCycle
+connectedCallback 
+disconnectedCallback
+ready - 1st DOM insertion
+attributeChangedCallback
+constructor <=> upgraded
+
+
+
+DOM
+
+Самостоятельная работа
+Использовать Polymer LifeCycle reactions
+
+connectedCallback, disconnectedCallback, ready, attributeChangedCallback, constructor
+
+Напишите в чат >> "Готово"
+
+
+Shadow DOM
+"Shadow DOM fixes CSS and DOM. It introduces scoped styles to the web platform"
+
+"Shadow DOM removes the brittleness
+ of building web apps"
+ 
+© Eric Bidelman
+
+
+ 
+
+
+
+
+Shadow DOM
+"...a method of combining multiple DOM trees into one hierarchy and how these trees interact with each other within a document, thus enabling better composition of the DOM"
+ 
+© W3C
+
+
+ 
+
+
+
+
+Features
+Isolated DOM
+Composition
+
+Scoped CSS
+Simplifies CSS
+
+Почти iframe!
+
+
+Shadow Definitions
+Tree - отдельный DOM
+Root - document fragment
+Host - "родитель"
+
+
+
+const host = document.createElement('div');
+const shadowRoot = host.attachShadow({mode: 'open'});
+shadowRoot.innerHTML = '<h1>Hello Shadow DOM</h1>'
+
+// host.shadowRoot === shadowRoot
+// shadowRoot.host === host
+
+Самостоятельная работа
+Использовать новый Custom Element с Shadow DOM внутри
+
+const shadowRoot = header.attachShadow({ mode: 'open' })
+shadowRoot.innerHTML = '<h1>Hello Shadow DOM</h1>'
+
+Найти и посмотреть значение display элемента Shadow DOM
+Напишите в чат >> "Готово"
+
+
+Slots
+Placeholders & API 
+для компонент 
+
+
+<p>
+<slot name="my-text">default</slot>
+</p>
+
+<my-paragraph> <ul slot="my-text"> <li>different text</li> <li>in a list</li> </ul></my-paragraph>
+
+
+
+Styles
+
+#shadow-root
+ <style>
+ #tabs {
+ display: inline-flex;
+ ...
+ }
+ </style>
+ <div id="tabs">
+ ...
+ </div>
+
+Shadow DOM позволяет использовать основные, описывать изолированные стили, а также предоставлять API
+
+
+Features
+CSS селекторы объявленные внутри Shadow DOM применяются локально
+
+CSS селекторы объявленные снаружи не применяются к компоненту
+
+
+
+
+Custom styling
+
+#shadow-root
+ <style>
+ :host {
+ display: block; 
+/* by default, custom elements are display: inline */
+/* :host(.blue) {color: blue;} */
+ }
+ </style>
+
+
+:host позволяет описывать стили применяемые к компоненте
+
+Снаружи :host приритетнее
+
+:host-context для контекста
+
+
+Custom styling
+
+::slotted(h1) {
+ color: red;
+}
+
+@keyframes foo { from { color: red; } to { color: blue; } @apply --this-is-not-a-style-rule;}
+
+::slotted (or ::content)
+
+@apply (CSS Mixins)
+deprecated::shadow/deep/ 
+
+
+Самостоятельная работа
+Использовать локальный style
+
+Переопределить стиль элемента снаружи
+Напишите в чат >> "Готово"
+
+На занятии
+
+Разобрали веб спецификация Shadow DOM и Custom Elements, на базе которых создан Polymer
+Modern JavaScript Frameworks
+
+Сделать приложение для показа дерева элементов с помощью Custom Elements tree и leaf 
+
+{ id: 1, items: [{ id: 2, items: [{ id: 3 }] }]}
+
+Самостоятельная работа
+Вы верите в Web Components?
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

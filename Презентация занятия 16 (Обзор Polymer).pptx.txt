@@ -1,0 +1,250 @@
+Обзор Polymer
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+
+Routing
+Vue Summary
+Темы предыдущего занятия
+Самостоятельная работа к прошлом занятию
+Настроить routing для страниц
+ES6 Hint
+О блоке
+
+Polymer
+Web Standards
+Цели
+
+Создавать Custom Elements, используя встроенные браузерные возможности
+Подключать и использовать Polymer для создания приложений
+Ориентироваться в веб спецификациях, на базе которых работает Polymer
+
+
+
+Темы
+
+Введение в Polymer
+Hello Polymer
+Обзор инструментов
+
+Docs
+https://www.polymer-project.org/ Official Guide
+https://developers.google.com/web/fundamentals/web-components/ Google tutorials & guides
+
+About
+Polymer is a JavaScript library that helps you create custom reusable HTML elements, and use them to build performant, maintainable apps.
+
+
+History
+Прошлое - 2014-2015 - v1 для Material Design
+Настоящее - v2
+Будущее - v3
+
+
+
+Ключевые особенности
+Использование стандартов и веб технологий
+Все - элемент
+Витрина готовых компонент
+
+
+Технологии
+Web Components
+HTML, CSS декларативный подход описания приложения
+JavaScriptбизнес логика, polyfills
+
+
+Вопрос
+Что описывают эти стандарты?
+Custom Elements 
+HTML Templates 
+Shadow DOM 
+HTML Imports
+
+
+Web Components
+Custom Elements для создания собственных HTML тэгов
+HTML Templates позволяет определять и использовать шаблоны для HTML 
+Shadow DOM инкапсулирует DOM и стили
+HTML Imports загружает HTML документы на страницу
+
+
+Все элемент
+Например, AJAX
+bower install --save PolymerLabs/promise-polyfill#1 - 2
+bower install --save PolymerElements/iron-ajax
+<iron-ajax auto url="https://www.googleapis.com/youtube/v3/search" params='{"part":"snippet", "q":"polymer", "key": "YOUTUBE_API_KEY", "type": "video"}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+
+
+https://www.webcomponents.org/ 
+
+Самостоятельная работа
+Использовать paper-tabs, локально в firefox
+npm init -f
+npm i --save bower
+bower install --save PolymerElements/paper-tabs
+
+<!-- head -->
+<script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+<link rel="import" href="./bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="./bower_components/paper-tabs/paper-tabs.html">
+<!-- body -->
+<paper-tabs selected="1">
+ <paper-tab>ITEM ONE</paper-tab>
+ <paper-tab>ITEM TWO</paper-tab>
+ <paper-tab>ITEM THREE</paper-tab>
+</paper-tabs>
+
+
+Hello Polymer
+<link rel="import" href="https://polygit.org/components/polymer/polymer-element.html">
+<script>
+ // Define the class for a new element called custom-element
+ class CustomElement extends Polymer.Element {
+ static get is() { return "custom-element"; }
+ constructor() {
+ super();
+ this.textContent = "I'm a custom-element.";
+ }
+ }
+ // Register the new element with the browser
+ customElements.define(CustomElement.is, CustomElement);
+</script>
+
+
+Hello Polymer Demo
+<!DOCTYPE html><html lang="en"> <head> <script src="./webcomponentsjs/webcomponents-loader.js"></script> <link rel="import" href="custom-element.html"> </head> <body> <custom-element></custom-element> </body></html>
+
+
+Самостоятельная работа
+Создать hello-polymer элемент
+
+<!-- head -->
+<link rel="import" href="https://polygit.org/components/polymer/polymer-element.html">
+<script>
+ class CustomElement extends Polymer.Element {
+ static get is() { return "hello-polymer"; }
+ connectedCallback() {
+ // ...?
+ }
+ }
+ customElements.define(CustomElement.is, CustomElement);
+</script>
+<!-- body -->
+<!-- ...? -->
+
+
+Template
+<dom-module id="my-element">
+ <template>
+ <p>I'm a DOM element. This is my shadow DOM!</p>
+ </template>
+ <script>
+ class DomElement extends Polymer.Element {
+ static get is() { return "my-element"; }
+ }
+ customElements.define(DomElement.is, DomElement);
+ </script>
+</dom-module>
+
+Самостоятельная работа
+Создать custom элемент с шаблоном используя dom-module
+Добавить style внутрь template
+Открыть Inspector, найти shadow-root элемента 
+Какое название у функции конструктора shadow-root элемента?
+
+
+Инструменты
+polymer-cli - для создания, тестирования, разработки и демонстрации элементов и приложений
+https://www.webcomponents.org/ - коллекции компонент, в том числе routing, layout, pwa
+
+
+
+Самостоятельная работа
+Установить polymer-cli
+npm install -g polymer-cli
+polymer --version # copy2chat
+Установить bower
+npm install -g bower
+bower --version # copy2chat
+
+Самостоятельная работа
+Создать my-element
+mkdir my-element && cd my-element
+polymer init
+# answer the questionary 4 element
+# wait 4 bower install
+polymer serve
+# copy2chat port number
+
+
+Folders
+ README.md # Documentation 
+ bower.json # Bower dependencies declaration
+ bower_components # Bower installed dependencies
+ demo # Demo
+ index.html #
+ index.html # Generated API reference
+ my-element.html # Source
+ polymer.json # Project structure & build configuration
+ test # Tests
+
+
+Самостоятельная работа
+Создать my-app
+mkdir my-app && cd my-app
+polymer init
+# answer the questionary 4 app
+# wait 4 bower install
+polymer serve
+# copy2chat Hello message
+
+
+Самостоятельная работа
+Test & Build
+polymer test
+# copy2chat selenium server port number & browsers
+polymer build
+# copy2chat build result
+
+
+
+Test
+Можно сохранить в package.json:scripts:testpolymer test -l chrome --skip-selenium-install 
+Mocha - test framework
+Chai - assertion
+Sinon - spies, stubs, and mocks
+Selenium - для тестирования в разных браузерах 
+
+Build
+Только для приложений (не для компонент) 
+polymer.json
+{ "entrypoint": "index.html", "shell": "src/shop-app.html", "fragments": [ "src/shop-list.html", "src/shop-detail.html", "src/shop-cart.html", "src/shop-checkout.html", "src/lazy-resources.html" ], "sources": [ "src/**/*", "data/**/*", "images/**/*", "bower.json" ], "extraDependencies": [ "manifest.json", "bower_components/webcomponentsjs/webcomponents-lite.js" ], "lint": { "rules": ["polymer-2-hybrid"] }, "builds": [ { "preset": "es5-bundled" }, { "preset": "es6-unbundled" } ]}
+
+
+
+Polyfills
+bower install --save webcomponents/webcomponentsjs 
+webcomponents-lite.js - все вместе + platform (ES6 Promise, ...)
+webcomponents-loader.js - для динамической загрузки
+WebComponentsReady - событие готовности 
+На занятии
+
+Создавать Polymer elements & apps
+Подключать и использовать Polymer для создания приложений
+Ориентироваться в веб спецификациях, на базе которых работает Polymer
+Modern JavaScript Frameworks
+
+
+Доделать примеры из урока!
+Самостоятельная работа
+Как вам Polymer?
+
+Легкий материал или нет?(1 просто - 10 сложно)
+
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

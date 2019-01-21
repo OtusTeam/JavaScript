@@ -1,0 +1,345 @@
+Сервисы
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+
+Декораторы
+Компоненты
+Директивы
+События жизненного цикла
+Темы предыдущего занятия
+Modern JavaScript Frameworks
+
+Темы
+
+Передача данных
+События
+ng-content
+Модули
+Сервисы
+
+Docs
+https://angular.io/guide/component-interaction Official Documentation - Components Interaction
+
+https://angular.io/tutorial/toh-pt4 Official Documentation - Services Tutorial
+Научиться передавать данные в приложении Angular 
+Создавать сервисы для получения, отправки и хранения данных для приложений Angular
+
+
+
+
+
+Цели
+
+// JavaScript Hint// The Set object lets you store unique values of any type, whether primitive values or object references
+const set1 = new Set([1, {}, [], 4, '5'])
+
+// converting between Set and Array
+mySet2 = new Set([1, 2, 3, 4])
+mySet2.size // 4
+[...mySet2], Array.from(mySet2) // [1, 2, 3, 4]
+
+// Iterate set entries with forEach
+mySet.forEach((n) => console.log(n))
+
+// API ...
+mySet.add(o)
+mySet.delete(5)
+mySet.has(5) // ?
+mySet.size
+
+
+Задача
+Как с помощью Set, array и filter реализовать
+union
+intersect
+difference
+?
+
+
+Example
+var union = new Set([...set1, ...set2])
+var intersection = new Set([...set1] .filter(x => set2.has(x)))
+var difference = new Set([...set1] .filter(x => !set2.has(x)))
+
+Components Interraction
+
+Events flow up, Data flows down
+Parent-child One-way Data-binding
+Two-way binding
+Link to child
+Mediator service
+
+
+@Input()
+import { Component, Input } from 
+'@angular/core';
+@Component({
+ selector: 'hello-world',
+ template: '<p>Hello, {{name}}!</p>',
+})
+export class HelloComponent {
+ @Input() name: string;
+}
+
+//...
+
+<hello-world name="World">
+</hello-world>
+
+@Input() setters
+
+Intercept & adapt input property
+import { Component, Input } from 
+'@angular/core';
+@Component({
+ selector: 'hello-world',
+ template: '<p>Hello, {{_name}}!</p>',
+})
+export class HelloComponent {
+ private _name: string
+ @Input() set name(newName: string) {
+ if (newName) {
+ this._name = newName;
+ } else {
+ console.log("Error: Bad name!");
+ }
+ }
+}
+
+Events
+<button (click)="onSave($event)">Save</button>
+<button on-click="onSave($event)">On Save</button>
+
+...
+
+import { Component } from '@angular/core'
+@Component({
+ selector: 'toggle',
+ template: `
+ <div>
+ <button (click)="toggle()">Click</button>
+ </div>`
+})
+export class ToggleComponent {
+ toggle() {
+ console.log('clicked')
+ }
+}
+
+Declare your interest in user actions through Angular event binding
+$event
+(eventName)
+
+Custom Events
+Angular EventEmitter 
+-> @Output property
+-> EventEmitter.emit(payload)
+<- Parent listen for the $event by (eventName)
+
+
+
+
+
+
+
+
+
+
+
+@Output deleteRequest = new EventEmitter<Some>();delete() { this.deleteRequest.emit(this.some);}
+
+<app-hero-detail (deleteRequest)="other($event)">
+</app-hero-detail>
+
+
+
+Observable property almost always an Angular EventEmitter which flows as event binding
+
+
+@Output()
+import { Component, Output, EventEmitter } 
+from '@angular/core'
+@Component({
+ selector: 'emit',
+ template: `<button (click)="tweet()">Click
+</button>`
+})
+export class EmitComponent {
+ @Output() result = new EventEmitter<number>()
+ tweet() {
+ this.result.emit(Math.random())
+ }
+}
+...
+<emit (result)="tweetReceived($event)"></emit>
+...
+tweetReceived(num: number) {
+ console.log('received', num);
+}
+
+
+
+
+
+
+
+
+
+@HostListener('deleteRequest', ['$event'])
+output($event) { ... }
+
+@Output deleteRequest = new EventEmitter<...>();delete() { this.deleteRequest.emit(...);}
+
+
+
+
+Задача
+Добавить компонент с Custom Event на событие click
+
+Events 
+Q&A
+
+Access
+Template reference variables (#local) 
+<input #phone placeholder="phone number"><button (click)="callPhone(phone.value)">
+Call
+</button>
+
+
+Ng-content
+Content Projection / 
+HTML slots implementation
+@Component({
+ selector: 'wrapper',
+ template: `
+ <div class="box">
+ <ng-content></ng-content>
+ </div>
+ `
+})
+class Wrapper {}
+
+
+Template reference variables (#local) 
+@ViewChild, @ViewChildren
+@ContentChild,@ContentChildren
+
+Access 
+import { Component, ViewChild } from 
+'@angular/core';
+import { AlertComponent } from 
+'./alert.component';
+
+@Component({
+ selector: 'app-root',
+ template: `
+ <app-alert>My alert</app-alert>
+ <button (click)="showAlert()">Show Alert</button>`
+})
+export class AppComponent {
+ @ViewChild(AlertComponent) alert: AlertComponent;
+ showAlert() {
+ this.alert.show();
+ }
+}
+
+Демо
+Добавить Drag`n`Drop компонент
+
+configure the injector and the compiler and help organize related things together
+
+© Angular
+NgModule
+@NgModule({ providers?: Provider[] declarations?: Array<Type<any> " any[]> imports?: Array<Type<any> " 
+ ModuleWithProviders " any[]> exports?: Array<Type<any> " any[]> entryComponents?: Array<Type<any> " any[]> bootstrap?: Array<Type<any> " any[]> schemas?: Array<SchemaMetadata " any[]> id?: string})
+
+
+NgModule
+describetemplate & injector
+
+identify components, directives & pipes
+
+publish them 4 external components via exports
+add service providers to DI
+
+import { BrowserModule } from 
+'@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+
+@NgModule({
+ declarations: [
+ AppComponent
+ ],
+ imports: [
+ BrowserModule
+ ],
+ providers: [],
+ bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+Services
+Share information among classes that don't know each other
+
+
+import { Injectable } from '@angular/core';@Injectable({ providedIn: 'root',})export class MyService { constructor() { }}
+
+> ng generate service my-service --module=app
+
+
+Inject
+@Injectable({ providedIn: 'root',})
+...
+import { MyService } from './my.service';
+constructor(private myService: MyService) {}
+ngOnInit() { this.myService.get();}
+
+
+Angular Dependency Injection system with provider:
+
+instantiates the
+MyService class 
+...
+
+fetch()
+requests a resource from the network and returns a promise that resolves to the Response object
+
+var myImage = document.querySelector('img')
+var myRequest = new Request('flowers.jpg')
+
+fetch(myRequest).then(function(response) {
+ return response.blob()
+}).then(function(response) {
+ var objectURL = URL.createObjectURL(response)
+ myImage.src = objectURL
+})
+
+
+@Injectable({ providedIn: 'root',})
+...
+import { MyService } from './my.service';
+constructor(private myService: MyService) {}
+ngOnInit() { this.myService.get();}
+
+
+Задача
+Добавить
+сервис с fetch
+
+На занятии
+
+Разобрали @Input, @Output и другие способы передавать данные в приложении Angular 
+Попробовали создать сервис для получения данных
+
+
+
+Modern JavaScript Frameworks
+
+Вопросы?
+
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

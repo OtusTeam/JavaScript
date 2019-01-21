@@ -1,0 +1,257 @@
+Особенности работы c Polymer
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+Shadow DOM
+Dom
+Slots
+Events
+Styles
+HTML Template
+
+
+
+Темы предыдущего занятия
+
+
+Shadow
+Isolated DOM & styles
+
+
+<style>
+ h3 { color: blue; }
+ my-element { color: black; }
+</style>
+<script>
+ class CustomElement extends HTMLElement {
+ constructor() {
+ super()
+ this.attachShadow({ mode: 'open' })
+ }
+ connectedCallback() {
+ this.shadowRoot.innerHTML = `
+ <style>
+ :host-context(body) { color: blue; }
+ </style>
+ <h3>Shadow DOM</h3>
+ `
+ }
+ }
+ customElements.define('my-element', CustomElement);
+</script>
+
+Polymer Data System
+Lit-HTML
+
+Interview with Pavlik
+
+
+Темы
+Цели
+
+Познакомиться с реализацией Data Binding и другими особенностями работы библиотеки Polymer 
+Сравнить c альтернативными подходами и инструментами
+
+Docs
+https://www.polymer-project.org/3.0/docs/devguide/data-system Polymer - Data system concepts
+https://polymer.github.io/pwa-starter-kit/redux-and-state-management/ PWA Starter Kit - Redux and state management
+
+
+
+
+
+
+Data System
+model <=> element properties
+
+local DOM
+paths
+
+
+class MyElement extends PolymerElement {
+ constructor() {
+ super()
+ this.a = 1
+ }
+ static get template() {
+ return `<p>[[a]] [[someProp]]</p>`
+ }
+ static get properties() {
+ return {
+ someProp: {
+ type: String,
+ notify: true,
+ value: 3
+ }
+ }
+ }
+}
+customElements.define('my-element', MyElement)
+
+
+Features
+Observers
+(simple, observer, get observers, *)
+Computed
+Data bindings
+(host <> target)
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';class XCustom extends PolymerElement { static get template() { return html`<p>My name is <span>{{fullName}}</span></p>` } static get properties() { return { first: String, last: String, fullName: { type: String, computed: 'computeFullName(first, last)' } } } computeFullName(first, last) { return first + ' ' + last; }}customElements.define('x-custom', XCustom)
+
+
+Paths & Bindings
+target-property="{{hostProperty}}"
+target-property="[[hostProperty]]"
+target-attribute$="[[hostProperty]]"
+<div>{{hostProperty}}</div>
+
+this.set('property.subproperty', 'value!')// ORthis.property.subproperty = 'new value!'this.notifyPath('property.subproperty')
+Observable changes
+// OR
+notifyPath() - data by path has changed
+pop(), push(), splice()...
+set(), ...
+
+
+
+Flow & Properties
+{{ }} // up + down
+[[ ]] // down
+notify // up
+readOnly // down
+Objects and Arrays
+static get properties() { return { user: String, isHappy: Boolean, count: { type: Number, readOnly: true, notify: true, // binding && event 
+ reflectToAttribute: true // ... } }}
+
+
+
+Polymer Templates
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js'class MyElement extends PolymerElement { static get template() { return html`
+ <style>:host { color: blue; }</style> <h2>String template</h2> ` }}
+customElements.define('my-element', MyElement)
+template => HTMLTemplateElement<template>
+
+dom-repeat
+dom-if
+dom-bind
+
+
+Combine & inherit templates
+
+class BaseElement extends PolymerElement { static get template() { return html` <p>BaseElement.</p>` }}class ChildElement extends BaseElement { static get template() { return html` <p>ChildElement</p> <p>${super.template}</p> <p>Hello again from ChildElement.</p> ` }}
+Для использования шаблона родителя можно указать super.template
+
+
+lit-html
+
+import {html, render} from 'lit-html'const helloTemplate = (name) =>
+html`<div>Hello ${name}!</div>`render(helloTemplate('Steve'), document.body)
+ES6 Template Literal HTML render library that "lets you write HTML templates with JavaScript template literals, and efficiently render and re-render those templates to DOM"
+
+
+ES6 Templates literals
+
+console.log(`Fifteen is ${a + b}, \nnot ${2 * a + b}.`)
+
+function myTag(strings, personExp, ageExp) { var str0 = strings[0] // "that " var str1 = strings[1] // " is a " return str0 + personExp + str1}
+
+var output = myTag`that ${person} is a ${age}`
+
+multiline
+expressions
+tagged
+
+Exercise
+Написать tagged template функцию factorial, возвращающую текст выражение первых N чисел факториала
+
+
+factorial`multiply this ${4}` 
+=> `multiply this 1 * 2 * 3 * 4 and get 24`
+
+
+
+lit-html API
+
+import {html, render} from 'lit-html'const helloTemplate = (name) =>
+html`<div>Hello ${name}!</div>`render( helloTemplate('Steve'), document.body)
+
+html ES6 template tag used => TemplateResult
+
+render( TemplateResult, element)
+
+Features
+Parses string and creates 
+<template>
+
+Nested Nodes
+Async 
+Directives (until, repeat)
+Extend
+
+
+
+
+
+
+const render = () => html`<p> ${until(
+ fetch('content.txt') .then((r) => r.text()), html`<span>Loading...</span>`
+ )}
+</p>`
+
+html`<button class$="primary">Buy Now</button>`
+
+html`<button on-click=${(e)=> this.onClickHandler(e)}>Buy Now</button>`
+
+
+
+
+Lit Element
+unidirectional data flow 
+own lifecycle and hooks
+lit-html with Shadow DOM instead of Polymer
+import {LitElement, html, property} from 
+ '@polymer/lit-element'class MyElement extends LitElement { @property() foo = 'foo' render() { return html` <style> :host([hidden]) { display: none; } </style> <h4>Foo: ${this.foo}</h4> <slot></slot> ` }}
+customElements.define('my-element', MyElement)
+
+
+
+
+pwa-starter-kit
+
+is a starting point for building PWAs
+
+all the PWA goodness (manifest, service worker)
+a responsive layout
+application theming
+example of using Redux for state management
+offline UI
+simple routing solution
+fast time-to-interactive and first-paint through the PRPL pattern
+easy deployment to prpl-server or static hosting
+unit and integrating testing starting points
+documentation about other advanced patterns
+
+
+Pavlik
+
+На занятии
+
+Разобрали веб спецификации Shadow DOM и HTML Template, на базе которых построен Polymer
+
+Самостоятельная работа
+Сделать приложение на Polymer для показа и добавления RSS рассылок из задания занятия "Построение Rest API"
+
+Создание рассылки по URL
+Показ списка всех добавленных URL рассылок
+Показ всех сохраненных из RSS документов
+
+Технологии - LitElement "" Custom Elements "" pwa-starter-kit "" Polymer "" webcomponents 
+
+Modern JavaScript Frameworks
+
+Вы верите в Web Components?
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

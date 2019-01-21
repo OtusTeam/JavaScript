@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill-rule="evenodd" fill="none" stroke-linecap="square" stroke-miterlimit="10" overflow="hidden" preserveAspectRatio="none" style="position:absolute;top:0;left:0" width="568" height="757" viewBox="0 0 216408 288417">
+  <rect fill="none" width="100%" height="100%"/>
+  <g transform="translate(6858 68199) scale(.55625)">
+    <defs cursor="default">
+      <filter id="a" filterUnits="userSpaceOnUse" x="-6542.4093" y="-6542.2893" width="381000.04028" height="45846.95887">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="2540" result="blur"/>
+        <feComponentTransfer color-interpolation-filters="sRGB">
+          <feFuncR type="linear" slope="0"/>
+          <feFuncG type="linear" slope="0"/>
+          <feFuncB type="linear" slope="0"/>
+          <feFuncA type="linear" slope=".01961"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+    <path fill="#fff" d="M0 0h365760v274320H0z"/>
+    <path fill="#FEFEFE" d="M0 0h365760v274320H0z"/>
+    <use transform="translate(1077.6307 1077.6307)" visibility="hidden" pointer-events="none" xlink:href="#b" filter="url(#a)"/>
+    <g id="b">
+      <path fill="#FFF" fill-opacity=".49804" d="M-.04.08h365760.04028v30606.95887H-.04z"/>
+    </g>
+    <path stroke="#7F7F7F" stroke-opacity=".09804" stroke-width="381" stroke-linecap="butt" stroke-miterlimit="400" d="M0 30607h365760.04028"/>
+    <clipPath id="c">
+      <path d="M309248 11112.91992h34922.00012v8381.28003H309248z"/>
+    </clipPath>
+    <g clip-path="url(#c)">
+      <image fill="#000" width="800" height="192" preserveAspectRatio="none" transform="translate(309248 11112.91992) scale(43.6525)" xlink:href="https://lh6.googleusercontent.com/qdEIz95p8rAmZFeGfxIqev42PvFTufHwIsHsMLOBbnoaPSW8BeeThoNj42KfLuJSzX2rsujhJyb7_U-dNoThaBef_nwXLxI8FNEq22ns2I4kzqDWVVzIxlviQWUTHea45X68h0JmvxUjgkrjkQ"/>
+    </g>
+    <g>
+      <path d="M21590 9354.08008h264667.99736v11898.9998H21590z"/>
+      <path fill="none" pointer-events="visiblePainted" d="M21590 9354.08008h264667.99736v11898.9998H21590z"/>
+      <g transform="matrix(381 0 0 381 21590 8636.07998)">
+        <g pointer-events="none">
+          <g class="sketchy-text-content">
+            <text text-rendering="geometricPrecision" font-family="docs-Roboto" font-size="29.33333" fill="#3f3f3f" white-space="pre" transform="translate(0 28.16)">
+              Содержание
+            </text>
+          </g>
+        </g>
+        <rect/>
+      </g>
+    </g>
+    <g>
+      <path d="M21590 43561.16016h322579.9942V261001.1645H21590z"/>
+      <path fill="none" pointer-events="visiblePainted" d="M21590 43561.16016h322579.9942V261001.1645H21590z"/>
+      <g transform="matrix(381 0 0 381 21590 43561.16016)">
+        <g pointer-events="none">
+          <g class="sketchy-text-content">
+            <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+              <text x="4.79688" font-family="Arial" font-size="32" transform="translate(0 30.72)">
+                •
+              </text>
+              <text x="23" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 30.72)">
+                Пункт
+              </text>
+              <text x="103.81308" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 30.72)">
+                содержания
+              </text>
+            </g>
+          </g>
+          <g class="sketchy-text-content">
+            <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+              <text x="4.79688" font-family="Arial" font-size="32" transform="translate(0 76.72)">
+                •
+              </text>
+              <text x="23" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 76.72)">
+                Пункт
+              </text>
+              <text x="103.81308" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 76.72)">
+                содержания
+              </text>
+            </g>
+          </g>
+          <g class="sketchy-text-content">
+            <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+              <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 113.504)">
+                •
+              </text>
+              <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 113.504)">
+                Подпункт
+              </text>
+              <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 113.504)">
+                содержания
+              </text>
+            </g>
+          </g>
+          <g class="sketchy-text-content">
+            <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+              <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 148.504)">
+                •
+              </text>
+              <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 148.504)">
+                Подпункт
+              </text>
+              <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 148.504)">
+                содержания
+              </text>
+            </g>
+          </g>
+          <g class="sketchy-text-content">
+            <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+              <text x="4.79688" font-family="Arial" font-size="32" transform="translate(0 192.72)">
+                •
+              </text>
+              <text x="23" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 192.72)">
+                Пункт
+              </text>
+              <text x="103.81308" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 192.72)">
+                содержания
+              </text>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="4.79688" font-family="Arial" font-size="32" transform="translate(0 238.72)">
+                  •
+                </text>
+                <text x="23" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 238.72)">
+                  Пункт
+                </text>
+                <text x="103.81308" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 238.72)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="4.79688" font-family="Arial" font-size="32" transform="translate(0 284.72)">
+                  •
+                </text>
+                <text x="23" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 284.72)">
+                  Пункт
+                </text>
+                <text x="103.81308" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 284.72)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 321.504)">
+                  •
+                </text>
+                <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 321.504)">
+                  Подпункт
+                </text>
+                <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 321.504)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 356.504)">
+                  •
+                </text>
+                <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 356.504)">
+                  Подпункт
+                </text>
+                <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 356.504)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="4.79688" font-family="Arial" font-size="32" transform="translate(0 400.72)">
+                  •
+                </text>
+                <text x="23" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 400.72)">
+                  Пункт
+                </text>
+                <text x="103.81308" font-family="docs-Roboto" font-size="26.66667" transform="translate(0 400.72)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 437.504)">
+                  •
+                </text>
+                <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 437.504)">
+                  Подпункт
+                </text>
+                <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 437.504)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 472.504)">
+                  •
+                </text>
+                <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 472.504)">
+                  Подпункт
+                </text>
+                <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 472.504)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 507.504)">
+                  •
+                </text>
+                <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 507.504)">
+                  Подпункт
+                </text>
+                <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 507.504)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g class="sketchy-text-content">
+              <g class="sketchy-text-content-text" text-rendering="geometricPrecision" fill="#3f3f3f" white-space="pre">
+                <text x="36.15782" font-family="Arial" font-size="22.4" transform="translate(0 542.504)">
+                  •
+                </text>
+                <text x="55" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 542.504)">
+                  Подпункт
+                </text>
+                <text x="143.58026" font-family="docs-Roboto" font-size="18.66667" transform="translate(0 542.504)">
+                  содержания
+                </text>
+              </g>
+            </g>
+          </g>
+        </g>
+        <rect/>
+      </g>
+    </g>
+  </g>
+</svg>

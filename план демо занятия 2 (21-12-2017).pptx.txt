@@ -1,0 +1,84 @@
+Особенности языка JavaScript
+Modern JavaScript Frameworks
+Коржиков Александр
+Modern JavaScript Frameworks
+
+Коржиков Александр
+Темы занятия
+Коржиков Александр
+Типы данных 
+Функции
+Замыкания
+Контекст
+
+JavaScript
+Коржиков Александр
+ECMAScript 6 (2015)
+
+http://es6-features.org/ (кратко)
+http://exploringjs.com/es6/ (подробно)
+
+Типы данных
+
+Коржиков Александр
+typeof typeof null === ?
+
+
+number
+string
+boolean 
+null
+undefined
+object
+
+Переменные
+Коржиков Александр
+
+var a = { a }let b = { b }const c = { c }
+var
+let
+const
+
+Переменные
+Коржиков Александр
+
+var (hoisting)
+let
+const
+
+var a = { a } // Oklet b = { b } // Errorconst c = { c } // Error
+Функции
+
+Коржиков Александр
+function a() {}const a = () => {}
+
+
+
+Контекст исполненияthis
+Arguments
+Замыкания
+Коржиков Александр
+
+for (var i = 0; i < 10; i++) { setTimeout(function() { console.log(i)
+ }, 1000)
+}
+Область видимости определяется функцией
+Замыкания
+Коржиков Александр
+
+for (let i = 0; i < 10; i++) { setTimeout(function() { console.log(i)
+ }, 1000)
+}
+
+var obj = { a: function (){ console.log(this.prop) }, prop: 1 }; obj.a.prop = 2 obj.a() // ? var fn = obj.afn() // ?
+
+Коржиков Александр
+Modern JavaScript Frameworks
+
+Коржиков Александр
+sum(1)(2)(3)....(n)() 
+=== 1 + 2 + 3 + ... + n
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 5 сложно)
+Спасибо за внимание!

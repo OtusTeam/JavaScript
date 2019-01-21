@@ -1,0 +1,220 @@
+Введение в Node
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+DevTools
+Promise
+DOM API
+Events
+Ajax
+
+Темы предыдущего занятия
+Написать функцию getPath, находяющую уникальный css-селектор для элемента в документеgetPath(node) // => "div>div:nth-child(2)>span"
+Создать функцию reduce для асинхронных функцийpromiseReduce( promisesArr, actionFn, startValue) 
+Самостоятельная работа к прошлом занятию
+Цели занятия
+
+Запускать приложения на платформе Node
+Использовать require и ES6 Imports для экспорта и импорта зависимостей
+Использовать модуль Events для работы с событиями в Node
+Темы занятия
+Что такое Node?
+Modules
+Events
+
+Docs
+https://nodejs.org/en/docs/guides/ 
+(статьи)
+
+https://nodejs.org/dist/latest-v9.x/docs/api/ 
+(модули, API)
+
+
+Node
+Асинхронная среда исполнения JavaScript, основанная на событийной модели, для создания эффективных сетевых приложений
+
+
+Пример web сервера
+const http = require('http')const hostname = '127.0.0.1'const port = 3000const server = http.createServer((req, res) => { res.statusCode = 200 res.setHeader('Content-Type', 'text/plain') res.end('Hello World\n')})server.listen(port, hostname, () => { console.log(`Server running at 
+ http://${hostname}:${port}/`)})
+Демо
+
+server.js
+
+Структура
+V8 - платформа исполнения JavaScript от Google
+Event Loop - асинхронный событийный цикл с libuv
+Модули для работы с операционной системой
+
+
+Вопрос
+А Вы знаете какие модули включены в стандартный дистрибутив Node?
+
+Модули
+Events
+Errors
+HTTP
+File System
+V8
+...
+
+
+
+Node
+
+Установить node и npmhttps://nodejs.org/en/download/node --version // в консолиnpm --version
+Запустить приложение "Hello World"Создать файл server.jsconsole.log("hello world")node server // в консоли
+
+Callbacks
+const http = require('http')const hostname = '127.0.0.1'const port = 3000const server = http.createServer((req, res) => { res.statusCode = 200 res.setHeader('Content-Type', 'text/plain') res.end('Hello World\n')})server.listen(port, hostname, () => { console.log(`Server running at 
+ http://${hostname}:${port}/`)})
+Где именно?
+
+server.js
+
+Callbacks
+// defaultfs.readFile('/etc/passwd', (err, data) => { if (err) throw err console.log(data)})// singlefs.access('/etc/passwd', fs.constants.R_OK, 
+(err) => { console.log(err ? 'no access!' : 'read')})
+default - вызывается с ошибкой или результатом
+single - только с ошибкой
+
+
+Modules
+Архитектурный шаблон проектирования, помогающий организовать отдельные части кода 
+
+
+Modules
+Classic
+AMD 
+CommonJS
+ES6
+
+
+Classic 
+// Global modulevar myModule = (function ( jQ, _ ) { function privateMethod1(){ jQ(".container").html("test") } return { publicMethod: function(){ privateMethod1() } }})( jQuery, _ ) myModule.publicMethod()
+Immediately-Invoked Function Expression (IIFE)
+Object Notation
+RequireJS
+
+AMD
+requirejs(['./common'], 
+ function (common) { requirejs(['app/main1']) })//define(function (require) { // ...})
+Node
+Сборщики
+Webpack
+Rollup
+...
+
+CommonJS
+// requireconst circle = 
+ require('./circle.js')// exportsexports.square = 
+ (r) => r ** 2
+
+Module Wrapper
+(function(exports, require,
+ module, __filename, __dirname) { const circle = 
+ require('./circle.js') exports.square = 
+ (r) => r ** 2})
+require - импорт глобальных и локальных зависимостей
+module, module.exports
+
+require
+const cachedGlob = require('glob')delete 
+ require.cache[require.resolve('glob')]const originalGlob = require('glob')cachedGlob.Glob = originalGlob.Glob
+require
+require.cache - хранит загрузки
+require.resolve - возвращает путь до зависимости
+
+Вопрос
+const cachedGlob = require('glob')delete 
+ require.cache[require.resolve('glob')]const originalGlob = require('glob')cachedGlob.Glob = originalGlob.Glob
+Что здесь происходит?
+
+Вопрос
+const empty = require('./empty.js')empty.test = 123console.log(require('./empty.js').test)console.log('finished')
+Что будет выведено в консоль?
+
+
+
+require('core') - встроенные модули
+require('/') или './', '../' - откуда 
+file, .js, .json, .node - расширения файлов
+X/index.js - index
+X/package.json - "модуль"
+node_modules - загрузка по иерархии
+
+https://nodejs.org/dist/latest-v8.x/docs/api/modules.html#modules_all_together 
+Порядок загрузки
+
+
+
+Циклические зависимости
+b.js > require('./a')
+a.js > require('./b')
+Код первого модуля внутри второго будет "незавершенным"
+
+
+
+b.js
+a.js
+Вопрос
+const b = require('./b')console.log(b.b)exports.a = 'a'console.log('finished')
+a.js
+const a = require('./a')console.log(a.a)exports.b = 'b'
+b.js
+Что будет выведено в консоль?> node a
+
+exports
+module.exports = { build, version,}exports.version = 123
+exports - экспорт API из модуля
+module.exports
+
+ES6 Imports
+export default 'ui.router'import * as core from 
+ '@uirouter/core'export { core }
+export
+import
+import(...)
+Поддерживается в расширении *.mjs
+
+Events
+const EventEmitter = require('events')class MyEmitter extends EventEmitter {}const myEmitter = new MyEmitter()
+myEmitter.on('event', () => { console.log('an event occurred!')})myEmitter.emit('event')
+Паттерн Observer - подписка на уведомления
+Синхронное исполнение хэндлеров
+
+Events
+const EventEmitter = require('events')class MyEmitter extends EventEmitter {}const myEmitter = new MyEmitter()
+myEmitter.emit('error')
+Специальные события
+
+error
+newListener
+removeListener
+
+Events
+API
+on(), once(), prependListener()
+emit()
+removeListener(),removeAllListeners()
+listeners()
+const EventEmitter = require('events')const myEmitter = new EventEmitter()myEmitter.on('event', (a, b) => { console.log(a, b, this); // Prints: a b {}})myEmitter.emit('event', 'a', 'b')
+На занятии
+
+Запускать приложения на платформе Node
+Использовать require и exports для экспорта и импорта зависимостей
+Использовать модуль Events для работы с событиями в Node
+Modern JavaScript Frameworks
+
+Установить зависимости, которые не успели установить на уроке. 
+Запустить локально тестовый Web Server с экземпляром EventEmitter. 
+Написать функцию promisify, которая будет работать со всеми возможными callback функциями библиотек Node.
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

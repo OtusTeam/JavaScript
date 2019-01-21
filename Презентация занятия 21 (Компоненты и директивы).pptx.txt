@@ -1,0 +1,352 @@
+Компоненты и директивы
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+
+Темы предыдущего занятия
+TypeScript
+Типы
+Классы, интерфейсы
+Generics
+Modern JavaScript Frameworks
+
+JavaScript Hint
+Axel Rauschmayer
+@rauschma
+Декомпозировать приложения на компоненты
+Разбираться в понятиях - директивы и компоненты в фреймворке Angular
+Создавать простые директивы и компоненты
+
+
+
+
+
+Цели
+
+Темы
+
+Декораторы
+Компоненты
+Директивы
+События жизненного цикла
+
+Docs
+https://angular.io/guide/architecture-components Official Documentation - Intro to components
+https://angular.io/guide/displaying-data Official Documentation - Components & Templates 
+
+Decorators
+=> JavaScript, Draft (Stage 2) in TC39 Process 
+
+Precisely describe the syntax and semantics using formal spec language
+The committee expects the feature to be developed and eventually included in the standard 
+https://tc39.github.io/process-document/ 
+
+Вопрос
+@defineElement('num-counter')
+class Counter extends HTMLElement {
+ @observed #x = 0;
+
+ @bound
+ #clicked() {
+ this.#x++;
+ }
+
+ constructor() {
+ super();
+ this.onclick = this.#clicked;
+ }
+
+ connectedCallback() { this.render(); }
+
+ @bound
+ render() {
+ this.textContent = this.#x.toString();
+ }
+}
+
+Какие декораторы выполняют какие функции?
+
+
+Example
+@defineElement defines the custom element
+@bound to avoid bind call
+@observed triggers render()
+@defineElement('num-counter')
+class Counter extends HTMLElement {
+ @observed #x = 0;
+
+ @bound
+ #clicked() {
+ this.#x++;
+ }
+
+ constructor() {
+ super();
+ this.onclick = this.#clicked;
+ }
+
+ connectedCallback() { this.render(); }
+
+ @bound
+ render() {
+ this.textContent = this.#x.toString();
+ }
+}
+
+
+
+Definition
+A declaration @expression, where expression must evaluate to a function that can be attached to a class declaration, method, accessor, property, or parameter
+
+function my(target, key, descriptor) {
+ console.log('my decorator called')
+}
+
+class A {
+ @my
+ method() {
+ return 1
+ }
+}
+
+new A().method()
+
+
+
+
+> tsc --target ES5 --experimentalDecorators decorators.ts
+> node decorators.js
+> my decorator called
+
+Descriptors
+configurable,enumerable,value,writableсвойства
+get,set - функции доступа
+
+
+var descriptor = { 
+ get: function() { return 1 },
+ set: function() {},
+ value: 2,
+}
+
+Uncaught TypeError: Invalid property descriptor. Cannot both specify accessors and a value or writable attribute, #<Object>
+
+Вопросы
+А для чего еще можно использовать декораторы?
+Как можно реализовать polyfill для декораторов?
+Демо
+Реализация декоратора
+Polyfill 
+
+
+
+Decorators in Angular
+@Component, @Directive, @Pipe
+@Input, @Output
+@Inject, @Injectable
+@NgModule
+
+Decorators 
+Q&A
+
+
+Components
+A component controls a patch of screen called a view
+
+An Angular application is a tree of Angular components
+
+© Angular
+
+
+
+
+Presentations and Containers
+how things look?
+
+how things work?
+
+Anything strange?
+
+import { Component } from '@angular/core';
+@Component({
+ selector: 'hello-world',
+ template: '<p>Hello, {{name}}!</p>',
+})
+export class HelloComponent {
+ name: string;
+ constructor() {
+ this.name = 'World';
+ }
+}
+
+<app>
+ <navigation></navigation>
+ <transfer></transfer></app>
+
+
+Component
+Must be declarated in declarations field of that NgModule
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+ declarations: [
+ AppComponent,
+ ],
+ imports: [
+ ],
+ providers: [],
+ bootstrap: [AppComponent],
+ exports: []
+})
+export class AppModule { }
+
+
+@Component
+import { Component } from '@angular/core'
+
+@Component({
+ changeDetection?: ChangeDetectionStrategy
+ viewProviders?: Provider[]
+ moduleId?: string
+ templateUrl?: string
+ template?: string
+ styleUrls?: string[]
+ styles?: string[]
+ // ...
+ // inherited from core/Directive
+ selector?: string
+ inputs?: string[]
+ outputs?: string[]
+ providers?: Provider[]
+})
+What are view properties?
+
+What are data properties?
+
+
+
+Template
+HTML with Angular declarations
+Data Binding
+Directives
+Pipes
+
+import { Component, Output, EventEmitter } 
+from '@angular/core'
+@Component({
+ selector: 'emit',
+ template: 
+ `<div>
+ <button (click)="tweet()">
+{{ title " translate }}</button>
+ </div>`
+})
+export class EmitComponent {
+ @Output() result = new EventEmitter<number>();
+ tweet() {
+ this.result.emit(Math.random());
+ }
+}
+
+
+Templates Interpolation
+{﻿{...}}
+<script> 
+assignments (=, +=, -=, ...)
+side effects operators(new ; , ++ -- " &)
+
+
+<h3> {{title}} <img src="{{heroImageUrl}}" 
+ style="height:30px">
+</h3>
+
+
+
+
+{{title}}<span [hidden]="isUnchanged">changed</span>
+
+Самостоятельная работа
+Добавить компонент в приложение 
+
+ng generate component game -it
+# copy2chat $0.constructor
+
+
+
+
+Directive
+a class with a instructions and @Directive decorator which transforms the DOM when Angular renders templates
+
+import { Directive } from '@angular/core';
+
+@Directive({
+ selector: '[appWakaWaka]'
+})
+export class WakaWakaDirective {
+ constructor() {
+ console.log('waka-waka')
+ }
+}
+
+
+Core Directives
+Attribute
+ngClass, ngStyle
+ngModel 
+
+*Structural
+*ngFor
+*ngIf, *ngSwitch
+
+<p ngClass="centered-text underlined"> // ...</p>
+<p [ngClass]="['warning', 'big']"> // ...</p>
+<p [ngClass]="{ card: true, flat: flat }"> // ...</p>
+
+<div *ngIf="exists">
+ Exists
+</div>
+
+<span *ngFor="let episode of episodes">
+ {{episode}}
+</span>
+
+
+LifeCycle Hooks
+import { ... } from '@angular/core'
+ngOnChanges - changes of the input data values
+ngOnInit - the first component's drawing
+ngDoCheck - additional check of changes
+ngAfterContentInit - added external content
+ngAfterContentChecked - content is initialized
+ngAfterViewInit - children are initialized
+ngAfterViewChecked - checking child elements
+ngOnDestroy - before removal 
+
+Домашняя работа в блоке
+
+
+
+Вопрос
+Какие компоненты нам нужны для приложения Progressive Dictionary?
+Демо
+Создать компоненты для приложения Progressive Dictionary 
+На занятии
+
+Узнали как работают и как использовать декораторы
+Разобрали понятия - директивы и компоненты в фреймворке Angular
+Попробовали создавать простые директивы и компоненты
+
+Декомпозировать приложение для запоминания иностранных слов. Создать структуру и компоненты контейнеры приложения 
+Подключить Angular Material - https://material.angular.io/guide/getting-started 
+
+Самостоятельная работа
+Modern JavaScript Frameworks
+
+Как Вам Angular?
+
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

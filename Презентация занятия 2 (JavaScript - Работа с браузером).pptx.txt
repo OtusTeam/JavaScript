@@ -1,0 +1,257 @@
+JavaScript - Работа с браузером
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+Modern JavaScript Frameworks
+
+Типы данных
+Переменные 
+Функции
+Замыкания
+
+Темы предыдущего занятия
+sum(1)(2)(3)....(n)() === 1 + 2 + 3 + ... + n
+// promiseReduce([fnPromise0, fnPromise2, fnPromise3], sumFn, 0)
+Object.create
+Самостоятельная работа к прошлом занятию
+Цели занятия
+
+Освоить и вспомнить теорию, которая будет базисом для последующих уроков
+Решать специфичные для браузерной разработки задачи на языке JavaScript
+Темы занятия
+DevTools
+Promise
+DOM API
+Events
+Ajax
+Chrome DevTools
+http://learn.javascript.ru/debugging-chrome 
+(кратко)
+
+https://developers.google.com/web/tools/chrome-devtools/ 
+(полная)
+
+Chrome DevTools
+Console
+Sources
+Network
+Application
+Device Mode
+...
+Chrome DevTools - Демонстация
+Chrome DevTools
+Какая функция отработает быстрее?http://output.jsbin.com/feloni/3/quiet 
+Console Tricks
+debugger
+$0
+copy
+table
+Copy > Copy as cURL
+...?
+Promise
+
+<pending>
+fulfilled
+rejected
+Техника (шаблон) написанияасинхронного кода
+Promise
+
+new Promise((resolve, reject) => setTimeout( () => resolve("Hello"), 500))// AlternativePromise.resolve()Promise.reject()
+
+resolve - успешное завершение
+reject - выполнено с ошибкой
+
+Promise.resolve(1) // reject() .then((a) => { console.log(a) throw 'Oh no!' }) .catch(reason => { console.error(reason) })
+// Alternative
+// then(onThen, onCatch)
+Promise
+
+Callbacks
+
+then - вызвана при resolve с результатом 
+catch - при reject
+Promise
+
+Promise.reject() .catch(() => 2) .then(() => { throw 3 }) .catch(() => 4) .then((a) => console.log(a))
+
+Что будет выведено в консоль?
+
+Promise.resolve() .finally(() => 'done')//Promise.all([promise, promise2]) .then(() => 'then')
+More
+
+finally -выполнится при любом исходе
+all - параллельные promises
+Promise
+
+promiseAll([
+ promise, 
+ promise2
+])
+.then(([res1, res2]) => 'done')
+Задача
+
+Написать polyfill для Promise.all,ожидающий исполнение всех promise аргументов и возвращает все результаты
+Promise
+
+const promiseFn = () => new Promise(resolve => setTimeout(() => resolve(3.14), 500))async function asyncFn() { const Pi = await promiseFn() console.log(Pi)}asyncFn()
+
+
+async/await -«синтаксический сахар» для работы с Promise
+Promise
+DOM - модель HTML документа
+window - глобальный объект в браузере
+JavaScript 
+
+Browser
+
+DOM
+window
+JavaScript
+
+console.log(123)
+new Date()
+document.querySelector('div')
+Document Object Model
+Вопрос - что к чему относится?
+DOM
+
+Модель HTML документа
+
+<div id="test"> <div> <p></p> </div> <span></span></div>
+CSS Selectors
+
+<div id="id"> <div class="class"> <p class="c1 c2"></p> </div> <span></span></div>
+#id
+div, p, span
+.class
+.c1.c2
+div > span
+
+DOM API
+
+Поиск
+
+querySelector
+querySelectorAll
+getElementById, getElementsBy...
+document.querySelectorAll('div') 
+===
+document.getElementsByTagName('div') ?
+DOM API
+
+<div id="test"> <div> <p></p> </div> <span></span></div>
+
+// ->
+document.getElementById("test")
+ .querySelectorAll(":first-child")
+Что будет выбрано?
+
+getAttribute, setAttribute - управление атрибутами
+className, classList - класс элемента
+innerHTML, value, parentNode - свойства
+appendChild, insertBefore, ... - структурные методы 
+HTMLElement
+
+HTMLElement
+Написать функцию isParentOf(parent, element)которая определяет, является ли элемент родительским 
+
+
+Timeline
+Events
+JavaScript однопоточный?
+Event Queue
+click
+focus
+mousedown
+
+Events
+click
+mousedown, mouseup, ...
+submit, input, focus
+...
+element.addEventListener(
+ eventType, handler, phase
+) 
+element.removeEventListener(
+ eventType, handler, phase
+)
+// 'on' + eventType
+element.onclick = handler 
+
+
+Events - спуск и всплытие
+Сначала спуск (capturing), потом всплытие (bubbling)
+Delegation
+
+Events - Вопрос
+Какие события не всплывают?
+Как это проверить?
+Что с этим делать?
+
+
+Events
+Какие события не всплывают?
+Как это проверить?
+Что с этим делать?
+var n = document.getElementById("numPeople"), r = document.getElementById("result")document.addEventListener("focus", (e) => { r.innerHTML += "focus event triggered <br/>"}, true)n.addEventListener("focus", (e) => { r.innerHTML += "focus event triggered on element<br/>"}, false)
+Events
+type
+target, currentTarget
+preventDefault()
+
+stopPropagation(), stopImmediatePropagation()
+Ajax
+Asynchronous JavaScript And Xml - отправка запроса и получение ответа на сервер без перезагрузки страницы
+
+...
+XMLHttpRequest
+fetch
+WebSocket
+JSONP
+Ajax
+
+var req = new XMLHttpRequest()req.open('GET', '/xhr/test.html', true)req.onreadystatechange = function() { if (req.readyState == 4) { if (req.status == 200) { alert(req.responseText) } }}req.send(null);
+...
+XMLHttpRequest
+fetch
+WebSocket
+JSONP
+Ajax
+
+fetch(url) .then((response) => { ... }) .then(...)
+
+
+/** 
+ * Задание
+ * Отправить запрос на курсы валют
+ * https://api.fixer.io/latest 
+ * вывести в консоль курс евро к рублю
+ */
+...
+XMLHttpRequest
+fetch
+WebSocket
+JSONP
+Ajax
+
+fetch('https://api.fixer.io/latest') .then((resp) => resp.json()) .then(({ rates: { RUB }}) => {
+ console.log(`1 EUR = ${RUB} RUB`) 
+ })
+На занятии
+
+Рассмотрели инструменты доступные разработчику для отладки web страниц
+Разобрали теорию и задачи, возникающие при работе с браузерной средой 
+Вспомнили что такое DOM API, как работают события в браузере, как отправлять Ajax запросы и использовать Promise
+Modern JavaScript Frameworks
+
+Написать функцию getPath, находяющую уникальный css-селектор для элемента в документеgetPath(node) // => "div>div:nth-child(2)>span"
+promiseReduce([fnPromise0, fnPromise2, fnPromise3], sumFn, 0)
+Написать функцию, которая определяет, пересекаются ли два элемента на страницеintersect(node1, node2)
+
+Самостоятельная работа
+Все ли темы были понятны?(да - нет)
+Легкий материал или нет?(1 просто - 10 сложно)
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!

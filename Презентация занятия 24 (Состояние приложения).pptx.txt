@@ -1,0 +1,543 @@
+Состояние приложения
+Modern JavaScript Frameworks
+Коржиков Александр
+1 плохо
+10 хорошо
+Как меня слышно и видно?
+
+Callbacks, Promise, Async / Await
+Generators / Iterators
+Observable
+Операции над Observable
+Темы предыдущего занятия
+Modern JavaScript Frameworks
+
+
+Docs
+https://angular-2-training-book.rangle.io/ Rangle's Angular Training Book
+https://msdn.microsoft.com/en-us/library/dd458879.aspx Dependency Injection in MSDN
+
+https://angular.io/guide/dependency-injection-pattern The Dependency Injection pattern
+
+Разбираться в особенностях шаблона проектирования Dependency Injection и его имплементации в Angular
+
+
+
+
+
+
+
+Цели
+
+
+Темы
+Observables in Angular
+Dependency Injection / Service Locator / Inversion of control
+Angular DI Specifics
+
+Hint
+
+Cancellation is a TC39 proposal and it defines basic approach for user-controlled cancellation of asynchronous operations
+
+class CancellationTokenSource {
+ constructor(linkedTokens?: Iterable<CancellationToken>);
+ readonly token: CancellationToken;
+ cancel(): void;
+ close(): void;
+}
+
+class CancellationToken {
+ static readonly none: CancellationToken;
+ static readonly canceled: CancellationToken;
+ constructor(source: CancellationTokenSource);
+ readonly cancellationRequested: boolean;
+ readonly canBeCanceled: boolean;
+ throwIfCancellationRequested(): void;
+ register(callback: () => void): { unregister(): void; };
+}
+
+
+function fetchAsync(url, cancellationToken = CancellationToken.none) {
+ return new Promise((resolve, reject) => {
+ cancellationToken.throwIfCancellationRequested();
+
+ const xhr = new XMLHttpRequest();
+ const oncancel = () => {
+ xhr.abort();
+ reject(new CancelError());
+ }
+ const registration = cancellationToken.register(oncancel);
+
+ xhr.onload = event => {
+ registration.unregister();
+ resolve(event);
+ }
+
+ xhr.onerror = event => {
+ registration.unregister();
+ reject(event);
+ }
+
+ xhr.open('GET', url, /*async*/ true);
+ xhr.send(null);
+ });
+}function fetchConsumer(url) {
+ const source = new CancellationTokenSource();
+ setTimeout(() => source.cancel(), 1000); // cancel after 1sec.
+ return fetchAsync(url, source.token);
+}
+Cancellation
+
+CancellationTokenSource
+for signaling cancellationCancellationToken to observe a cancellation signal
+
+
+
+
+
+
+@Component({
+ selector: 'my-app',
+ template: `
+ <div>
+ <h2>Wikipedia Search</h2>
+ <input #term type="text" (keyup)="search(term.value)">
+ <ul>
+ <li *ngFor="let item of items">{{item}}</li>
+ </ul>
+ </div>
+ `
+})
+export class AppComponent {
+ items: Array<string>;
+ constructor(private wikipediaService: WikipediaService) {}
+ search(term) {
+ this.wikipediaService.search(term)
+ .then(items => this.items = items);
+ }
+}
+
+Why use Observables in Angular?
+Hit the endpoint once on stop typing 
+Don't hit the search endpoint with the same query params 
+Deal with out-of-order responses
+
+
+
+
+import { Injectable } from '@angular/core';
+import { URLSearchParams, Jsonp } from '@angular/http';
+
+@Injectable()
+export class WikipediaService {
+ constructor(private jsonp: Jsonp) {}
+
+ search (term: string) {
+ var search = new URLSearchParams()
+ search.set('action', 'opensearch');
+ search.set('search', term);
+ search.set('format', 'json');
+ return this.jsonp
+ .get('http://...?callback=JSONP_CALLBACK', { search })
+ .toPromise()
+ .then((response) => response.json()[1]);
+ }
+}
+
+HTTP
+@angular/http or
+@angular/ common/http
+include jsonp
+
+
+
+export class App {
+ items: Array<string>
+ term = new FormControl()
+ constructor(
+ private wikipediaService: WikipediaService
+ ) {
+ this.term.valueChanges
+ .debounceTime(400)
+ .distinctUntilChanged()
+ .subscribe(term => 
+ this.wikipediaService
+.search(term)
+.then(items => (
+this.items = items
+)))
+ }
+}
+
+
+Manage Query
+wait for 400ms pause in events
+ignore if next search term is same as previous
+Manage Streams
+Events as streams
+Redux Observable Demo
+
+
+@Component({
+ selector: 'counter',
+ template: `
+ <div class="content">
+ <button (click)="increment()">+</button>
+ <button (click)="decrement()">-</button>
+ <h3>{{counter$ " async}}</h3>
+ </div>
+ `,
+ changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class Counter{
+ counter$: Observable<number>;
+ constructor(private store : Store<number>){
+ this.counter$ = this.store.select('counter')
+ }
+ increment(){
+ this.store.dispatch({type: 'INCREMENT'});
+ }
+ decrement(){
+ this.store.dispatch({type: 'DECREMENT'});
+ }
+}
+
+NgRx
+
+Promise vs Observable
+Promise:
+Provide a single future value
+Not lazy
+Not cancellable
+Observable:
+Emits multiple values over time
+Lazy
+Cancellable
+Supports map, filter, reduce and similar operators
+
+
+Dependency Injection
+
+> The fewer changes you need to make, the better it usually is
+
+> Do not instantiate the dependencies explicitly in your class. Instead, declaratively express dependencies in your class definition
+
+Express vs Koa
+var express = require('express') 
+var app = express() 
+
+app.get('/', function (req, res) { 
+ res.send('hello world') 
+}) 
+
+app.listen(3000) 
+
+const Koa = require('koa')
+const app = new Koa() 
+
+app.use(async ctx => {
+ ctx.body = 'Hello World'
+})
+
+app.listen(3000)
+
+
+
+Express vs Koa
+var express = require('express') /**/
+var app = express() /* double code */
+/* change fragile */
+app.get('/', function (req, res) { /**/
+ res.send('hello world') /**/
+}) /**/
+ /* hardcoded dependencies */
+app.listen(3000) /* hard to test */
+
+const Koa = require('koa')
+const app = new Koa() 
+
+app.use(async ctx => {
+ ctx.body = 'Hello World'
+})
+
+app.listen(3000)
+
+
+
+
+/* web-server-factory.js */
+// express() "" new express()
+// new Koa()
+factory = (Fn) => {
+ return new Fn()
+}
+
+factory()
+
+Factory method
+How can an object be created so that subclasses can redefine which class to instantiate? 
+How can a class defer instantiation to subclasses?
+
+
+Web Server Factory
+factory / builder / injector - get valid instances during creation and pass them to dependent code 
+
+
+/* server.js */
+const framework = require('express')
+const factory = require('./web-server-factory')
+
+const app = factory({
+ framework,
+ middlewares: [/* ... */],
+})
+
+app.listen(3000)
+
+Service Locator
+
+a separate service who knows how, when and where to create depedency implementations
+
+
+Locator
+contains references to the services and encapsulates the logic to locate them
+
+
+/* app.js */
+const locator = require('./service-locator')
+const app = locator.app()
+
+app.listen(3000)
+
+/* locator.js */
+locator.configure = ({ framework, middlewares }) => {
+ // could be `register()`
+ // ...
+}
+
+locator.app = () => {
+ return this._instance = this._instance "" factory({
+ framework: this.resolve('framework'),
+ middlewares: this.resolve('middlewares'),
+ })
+}
+
+
+
+Testing
+override dependencies with mocks / stubs 
+
+locator.configure = ({ framework, middlewares }) 
+=> {
+ // ...
+}
+
+// =>
+describe('app test', () => {
+ test('runs my middleware', (done) => {
+ locator.configure({
+ framework: myTestExpress,
+ middleware: [done],
+ })
+ 
+ const app = locator.app()
+ app.request()
+ }) 
+})
+
+
+
+DI & Service Locator
+serve the same purpose - remove a concrete dependency instantiation and write less coupled code
+
+flexible architecture
+less coupled code
+testing
+reuse
+
+
+
+Inversion of Control
+> Inversion of Control is a key part of what makes a framework different to a library. A library is essentially a set of functions that you can call, these days usually organized into classes. Each call does some work and returns control to the client.
+
+> A framework embodies some abstract design, with more behavior built in. In order to use it you need to insert your behavior into various places in the framework either by subclassing or by plugging in your own classes. The framework's code then calls your code at these points.
+
+(c) Martin Fowler
+
+
+
+Services
+an API for solving some business function
+
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+ providedIn: 'root'
+})
+export class FetchDataService {
+ constructor() {}
+ get() {
+ return fetch('http://...')
+ .then(res => res.json())
+ }
+}
+> ng generate service fetch-data
+
+
+Services
+by instantiating them manually with new()
+
+
+import { Component, OnInit } from '@angular/core';
+import { FetchDataService } from './fetch-data.service';
+
+@Component({
+ selector: 'app-root',
+ templateUrl: './app.component.html',
+ styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+ title = 'app';
+ body: any;
+ fetch: any;
+ constructor() {
+ this.fetch = new FetchDataService();
+ }
+ ngOnInit() {
+ this.fetch.get()
+ .then((result) => { this.body = result })
+ }
+}
+
+Services
+or use Angular Dependency Injection
+
+
+import { Component, OnInit } from '@angular/core';
+import { FetchDataService } from './fetch-data.service';
+
+@Component({
+ selector: 'app-root',
+ templateUrl: './app.component.html',
+ styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+ title = 'app';
+ body: any;
+
+ constructor(private fetch: FetchDataService) {}
+
+ ngOnInit() {
+ this.fetch.get()
+ .then((result) => { this.body = result })
+ }
+}
+The @Injectable decorator identifies services and other classes that are intended to be injected
+ 
+It can also be used to configure a provider for those services
+
+
+Inject
+// ng generate service fetch-data
+import { Injectable } from '@angular/core';
+
+@Injectable({
+ providedIn: 'root'
+})
+
+
+
+Вопрос
+Как Angular решает проблему внедрения зависимостей? Как работает Injector?
+save meta information
+Vue.js setters / getters?
+
+Decorators
+function my(config) {
+ // save config
+ return function(target) {
+ // save target information
+ return target
+ }
+}
+
+@my({
+ meta: 'me'
+})
+class A {
+ constructor() {}
+}
+
+new A()
+
+
+Задача
+Реализовать DI decorator с декларацией зависимостей в свойстве inject
+
+
+@di({
+ inject: [MyLoggerClass]
+})
+class A {
+ constructor(logger: MyLoggerClass) {}
+}
+
+new A().logger.log('123')
+
+$scope and $http as dependencies
+$inject property annotation
+
+AngularJS
+var app = angular.module("DemoApp", []);
+
+app.controller('DemoController', 
+['$scope', '$http', function (s, h) {
+ h.get('https://api.github.com/users/angular/repos')
+ .success(function (repos) {
+ s.repos = repos;
+ });
+}]);
+
+DemoController['$inject'] = ['$scope', '$http']
+
+// comments
+// ng-annotate
+
+
+
+Вопрос
+Как можно разобрать зависимости без специальной нотации для AngularJS? app.controller('DemoController', function ($scope, $http) {
+ $http.get('https://api.github.com/users/angular/repos')
+ .success(function (repos) {
+ $scope.repos = repos;
+ });
+})
+
+Пример
+function doda(a, b, c) { }
+// > undefined
+doda.toString()
+// > "function doda(a, b, c) { }"
+Вопрос
+Как можно разобрать зависимости для Angular? 
+@Component({
+ selector: 'app-root',
+ templateUrl: './app.component.html',
+ styleUrls: ['./app.component.css']
+})export class AppComponent implements OnInit {
+ constructor(private fetch: FetchDataService) {}
+}
+
+На занятии
+
+Погрузились в особенности шаблона проектирования Dependency Injection
+Разобрали примеры использования Observable
+
+
+Modern JavaScript Frameworks
+
+Как Вам DI?
+
+Пожалуйста, пройдите опрос в личном кабинете
+Спасибо за внимание!
