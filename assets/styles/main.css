@@ -1,6 +1,6 @@
-@font-face {
+@font-face{
   font-family: 'Roboto';
-  src: url('./assets/fonts/Roboto-Regular.ttf');
+  src: url('/assets/fonts/Roboto-Regular.ttf');
 }
 
 @page {
@@ -20,46 +20,30 @@
 }
 
 * {
-  margin-block-start: 0;
-  margin-block-end: 0;
+  margin-block-start: 0; 
+  margin-block-end: 0;         
 }
 
 ul {
   padding-inline-start: 1em;
 }
 
-body {
-  font-family: 'Roboto';
-}
-
+body { font-family: 'Roboto'; }
 .remark-slide-content {
   padding: 3em 2em 1em 2em;
-  vertical-align: middle;
-  /* default middle class */
+  vertical-align: middle; /* default middle class */
 }
 
-h1,
-h2,
-h3,
-ul {
+h1, h2, h3, ul {
   font-weight: normal;
   margin-bottom: 1em;
+  margin-top: 1em;
 }
-
-h3 {
-  font-size: 24px !important;
-}
-
-h1 {
-  font-size: 48px !important;
-}
-
-h2 {
-  font-size: 36px !important;
-}
-
-li {
-  font-size: 24px !important;
+h3 { font-size: 24px !important; }
+h1 { font-size: 48px !important; }
+h2 { font-size: 36px !important; }
+li { 
+  font-size: 24px !important; 
   line-height: 2em;
 }
 
@@ -72,45 +56,32 @@ li li {
 }
 
 /* icons */
-
-.center.icon img {
-  width: 400px;
-}
-
-.top.icon img {
-  width: 100px;
-  position: absolute;
-  top: 1em;
-  left: 20px;
+.center.icon img { width: 400px; }
+.top.icon img { 
+  width: 100px; 
+  position: absolute; 
+  top: 1em; 
+  left: 20px; 
 }
 
 /* sound check */
-
 /* .sound-top { padding-top: 3em; } */
-
-.sound-bottom {
-  bottom: 40px;
-  position: absolute;
-}
-
-.sound-bottom h2,
-.sound-bottom h3 {
-  margin-block-end: 0.5em;
-  margin-block-start: 0.5em;
-}
+.sound-bottom { bottom: 40px; position: absolute; }
+.sound-bottom h2, .sound-bottom h3 { margin-block-end: 0.5em; margin-block-start: 0.5em; }
 
 /* title */
-
 .remark-slide-content>h1:first-child {
   position: absolute;
-  width: 100%;
-  top: 1em;
+  width: 100%; 
+  top: 0em;
   left: 0;
   vertical-align: middle;
+  
   font-size: 30px !important;
   padding-left: 1em;
   display: inline;
-  background-image: url(assets/otus-3.png);
+  
+  background-image: url(/assets/otus-3.png);
   background-position: center right 2em;
   background-repeat: no-repeat;
   background-size: 100px 24px;
@@ -123,49 +94,32 @@ li li {
   padding-top: 6px;
 }
 
-.remark-slide-content>h1:first-child::after {
+.remark-slide-content > h1:first-child::after {
   height: 1px;
   background-color: rgb(210, 220, 230);
   content: " ";
   position: absolute;
   top: 60px;
   left: 0;
-  width: 100%;
+  width: 100%; 
 }
 
-.remark-slide-content>h1:first-child p {
+.remark-slide-content > h1:first-child p {
   display: inline;
 }
 
+
+
 /* content */
+.hidden { display: none; }
+.white { color: white }
+.black { color: black }
+.red { color: red }
+.green { color: green }
+.blue { color: blue }
 
-.hidden {
-  display: none;
-}
 
-.white {
-  color: white
-}
-
-.black {
-  color: black
-}
-
-.red {
-  color: red
-}
-
-.green {
-  color: green
-}
-
-.blue {
-  color: blue
-}
-
-blockquote {
-  font-style: italic
-}
+blockquote { font-style: italic }
 
 .right-image img {
   float: right;
@@ -173,15 +127,14 @@ blockquote {
 }
 
 /* code */
-
-.remark-inline {
-  font-family: 'Consolas';
+.remark-inline {         
+  font-family: 'Consolas'; 
   font-style: normal;
 }
 
-.remark-inline-code {
-  font-family: 'Consolas';
-  font-size: 28px;
+.remark-inline-code { 
+  font-family: 'Consolas'; 
+  font-size: 28px; 
   font-style: normal;
   font-weight: bolder;
 }
@@ -198,29 +151,29 @@ blockquote {
   margin-right: 40px;
 }
 
-.left-code+ul {
+.left-code + ul {
   margin-top: 20px;
 }
 
 .right-code {
   float: right;
   width: 400px;
-  /* padding-left: 20px; */
 }
 
 .remark-code {
   /* height: 400px; */
-  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
+  box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   margin: 1rem 0;
   padding: 1em !important;
   border-radius: .28571429rem;
-  border: 1px solid rgba(34, 36, 38, .15)
+  border: 1px solid rgba(34,36,38,.15)
 }
 
 .hljs.bash {
   background-color: black;
   color: white;
 }
+
 
 table {
   width: 100%;
@@ -250,15 +203,15 @@ table img {
 }
 
 .mario-1 img {
-  width: 60px;
-  margin-left: 30px;
-  margin-top: 20px;
+  width: 40px;
+  margin-left: 10px;
+  margin-top: 40px;
 }
 
 .mario-2 img {
-  width: 60px;
+  width: 40px;
   margin-left: 30px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .mario-3 img {
@@ -308,15 +261,29 @@ table img {
 }
 
 .half-image img {
-  width: 50%
+  width: 50%;
+  height: 50%;
 }
 
 .full-image img {
   width: 100%
 }
 
-/* custom slide rules */
 
-#semantic-versioning~table th {
+/* custom slide rules */
+#semantic-versioning ~ table th {
   text-align: left;
+}
+
+.profile {
+  background-color: rgb(74, 144, 226);
+}
+
+.profile.remark-slide-content > h1:first-child::after {
+  height: 0px;
+}
+
+.profile img {
+  border-radius: 50%;
+  width: 300px;
 }
