@@ -1,5 +1,11 @@
 .center.icon[![otus main](assets/otus-1.png)]
 
+.TODO[
+  > the TypeScript Node (ts-node) - the on-the-fly module extension and REPL for Node.
+  
+  https://www.npmtrends.com/commander-vs-yargs-vs-oclif-vs-minimist-vs-vorpal-vs-inquirer
+]
+
 ---
 
 class: white
@@ -160,6 +166,9 @@ class: profile
 - Быстрая и простая разработка
 - Множество готовых пакетов и библиотек, богатая инфраструктура `npm` 
 - Модульность
+.TODO[
+- We build for Fronted developers, they have node installed already
+]
 
 ### .red[`-`]?
 

@@ -30,7 +30,7 @@ ul {
 
 body { font-family: 'Roboto'; }
 .remark-slide-content {
-  padding: 3em 2em 1em 2em;
+  padding: 90px 2em 1em 2em;
   vertical-align: middle; /* default middle class */
 }
 
@@ -45,6 +45,10 @@ h2 { font-size: 36px !important; }
 li { 
   font-size: 24px !important; 
   line-height: 2em;
+}
+
+li > ul {
+  margin-top: 0;  
 }
 
 li li {
@@ -65,7 +69,7 @@ li li {
 }
 
 /* sound check */
-/* .sound-top { padding-top: 3em; } */
+.sound-top h1 { margin-top: 0; }
 .sound-bottom { bottom: 40px; position: absolute; }
 .sound-bottom h2, .sound-bottom h3 { margin-block-end: 0.5em; margin-block-start: 0.5em; }
 
@@ -119,7 +123,7 @@ li li {
 .blue { color: blue }
 
 
-blockquote { font-style: italic }
+blockquote { font-style: italic; margin: 0; }
 
 .right-image img {
   float: right;
@@ -217,13 +221,19 @@ table img {
 .mario-3 img {
   width: 40px;
   margin-left: 120px;
-  margin-top: 140px;
+  margin-top: 150px;
 }
 
 .mario-4 img {
   width: 40px;
   margin-left: 140px;
-  margin-top: 233px;
+  margin-top: 248px;
+}
+
+.mario-11 img {
+  width: 40px;
+  margin-left: 240px;
+  margin-top: 300px;
 }
 
 .mario-5 img {
@@ -246,8 +256,8 @@ table img {
 
 .mario-12 img {
   width: 40px;
-  margin-left: 400px;
-  margin-top: 20px;
+  margin-left: 270px;
+  margin-top: 160px;
 }
 
 .mario-final img {
@@ -286,4 +296,10 @@ table img {
 .profile img {
   border-radius: 50%;
   width: 300px;
+}
+
+.height-400 img {
+  height: 400px;
+  position: absolute;
+  right: 200px;
 }
