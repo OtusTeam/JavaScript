@@ -1,17 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript Modern Frameworks</title>
-    <meta charset="utf-8">
-    <link href="assets/styles/main.css" rel="stylesheet">
+    <title>Презентация занятия 9.1 (Введение в курс JavaScript Modern Frameworks)</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./remark-it/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" href="./remark-it/css/font-open-color.css" />
+    
+    <link rel="stylesheet" type="text/css" href="./remark-it/css/abs-layout.css" />
+    <link rel="stylesheet" type="text/css" href="./remark-it/css/lines.css" />
+    <link rel="stylesheet" type="text/css" href="./remark-it/css/border-layout.css" />
+    <link rel="stylesheet" type="text/css" href="./remark-it/css/text-rect.css" />
+    <link rel="stylesheet" type="text/css" href="./remark-it/css/text-circle.css" />
+    <link href="assets/theme-purple/main.css" rel="stylesheet" />
   </head>
   <body>
     <script src="./assets/js/remark.js"></script>
     <script>
-      var slideshow = remark.create({
-        sourceUrl: 'Открытый вебинар JavaScript - WebAssembly.md',
-        highlightLanguage: 'javascript',
-        highlightStyle: 'vs',
+      const options = {
+        sourceUrl: "Презентация занятия 9.1 (Введение в курс JavaScript Modern Frameworks).md",
+        highlightLanguage: "javascript",
+        highlightStyle: "vs",
+        // slideNumberFormat: "",
+      };
+
+      var slideshow = remark.create(options, (slideshow) => {
+        const indexOfTodo = options.source.indexOf("TODO");
+        if (~indexOfTodo) {
+          const showMoreTextLength = 100;
+          const text = options.source.slice(
+            Math.max(0, indexOfTodo - showMoreTextLength),
+            Math.min(indexOfTodo + showMoreTextLength, options.source.length)
+          );
+          document.write(`<h1>TODO</h1><h3>${text}</h3>`);
+          slideshow.pause();
+        }
       });
     </script>
   </body>
