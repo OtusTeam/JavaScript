@@ -122,10 +122,18 @@ li li {
 
 blockquote { font-style: italic; margin: 0; }
 
-.title {
+.title, .qa {
   background-size: cover;
   background-image: url(background.jpeg);
   color: white;
+}
+
+.qa {
+  text-align: center;
+}
+
+.purple {
+  background-image: linear-gradient(150deg,rgb(142, 81, 208),rgb(174, 132, 207)), url(static/t0.gif);
 }
 
 .title h2 {

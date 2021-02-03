@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Презентация занятия 9.1 (Введение в курс JavaScript Modern Frameworks)</title>
+    <title>Презентация занятия 11.1 (Введение в курс JavaScript Modern Frameworks)</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="./remark-it/fonts/remixicon.css" />
     <link rel="stylesheet" type="text/css" href="./remark-it/css/font-open-color.css" />
@@ -17,14 +17,18 @@
     <script src="./assets/js/remark.js"></script>
     <script>
       const options = {
-        sourceUrl: "Презентация занятия 9.1 (Введение в курс JavaScript Modern Frameworks).md",
+        sourceUrl: "Презентация занятия 11.1 (Введение в курс JavaScript Modern Frameworks).md",
         highlightLanguage: "javascript",
         highlightStyle: "vs",
         // slideNumberFormat: "",
       };
+      
+      if (document.title !== options.sourceUrl.slice(0, -3)) {
+        alert('Title mismatch')
+      }
 
       var slideshow = remark.create(options, (slideshow) => {
-        const indexOfTodo = options.source.indexOf("TODO");
+        const indexOfTodo = options.source.toLowerCase().indexOf('todo');
         if (~indexOfTodo) {
           const showMoreTextLength = 100;
           const text = options.source.slice(
@@ -34,6 +38,10 @@
           document.write(`<h1>TODO</h1><h3>${text}</h3>`);
           slideshow.pause();
         }
+        
+        // if (/[а-яА-Я]/.test(options.source)) {
+        //   alert('Not english text detected')
+        // }
       });
     </script>
   </body>

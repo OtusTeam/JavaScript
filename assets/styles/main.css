@@ -85,7 +85,7 @@ li li {
   padding-left: 1em;
   display: inline;
   
-  background-image: url(/assets/otus-3.png);
+  background-image: url(./background-without-otus.jpg);
   background-position: center right 2em;
   background-repeat: no-repeat;
   background-size: 100px 24px;
@@ -230,6 +230,12 @@ table img {
   margin-top: 248px;
 }
 
+.mario-8 img {
+  width: 40px;
+  margin-left: 285px;
+  margin-top: 125px;
+}
+
 .mario-11 img {
   width: 40px;
   margin-left: 240px;
@@ -240,6 +246,12 @@ table img {
   width: 40px;
   margin-left: 140px;
   margin-top: 303px;
+}
+
+.mario-6 img {
+  width: 40px;
+  margin-left: 140px;
+  margin-top: 383px;
 }
 
 .mario-9 img {
@@ -257,6 +269,24 @@ table img {
 .mario-12 img {
   width: 40px;
   margin-left: 270px;
+  margin-top: 160px;
+}
+
+.mario-14 img {
+  width: 40px;
+  margin-left: 370px;
+  margin-top: 50px;
+}
+
+.mario-15 img {
+  width: 40px;
+  margin-left: 350px;
+  margin-top: 380px;
+}
+
+.mario-29 img {
+  width: 40px;
+  margin-left: 680px;
   margin-top: 160px;
 }
 
@@ -302,4 +332,8 @@ table img {
   height: 400px;
   position: absolute;
   right: 200px;
+}
+
+.strike {
+  text-decoration: line-through;
 }

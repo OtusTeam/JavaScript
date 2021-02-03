@@ -110,13 +110,30 @@ test('plays video', () => {
 
 # Test-Driven Development
 
-### Test-Driven Development (TDD) is a technique for building software that guides software development by writing tests
+### TDD is a technique for building software that guides software development by writing tests
 
 .right-image[![JS](assets/tdd/tdd_algorithm.png)]
 
 - Don't write code except to pass a failing test
 - Write only **enough of a test** to show the failure
 - Write only **enough code to pass** the failing test
+- Refactor (eliminate duplication)
+
+---
+
+# Pros
+
+.right-image[![tdd pros](assets/tdd/with-without-tdd.jpg)]
+
+- Design organically, running code provides feedback between decisions
+- Development environment must provide rapid response to small changes
+- Designs must consist of many highly cohesive, loosely coupled components
+
+---
+
+# Cons
+
+- Time
 
 ---
 
@@ -124,7 +141,7 @@ test('plays video', () => {
 
 .right-image[![JS](assets/tdd/tdd_algorithm.png)]
 
-## Test-driven development, or TDD, is a rapid cycle of testing, coding, and refactoring
+## A rapid cycle of testing, coding, and refactoring
 
 .red[ 
   - Write a failing test 
@@ -138,7 +155,7 @@ test('plays video', () => {
 
 ### *to get developers, testers and business to talk to each other*
 
-(Gherkin)
+### (Gherkin Language)
 
 .long-left-code[
 ```gherkin
@@ -158,8 +175,6 @@ Scenario: Another test
   Given ...
 ```
 ]
-
-<br>
 
 - Feature
 - Scenario
