@@ -5,5 +5,5 @@ req.open('GET', '/xhr/test.html', true) req.onreadystatechange = function () {
       alert(req.responseText)
     }
   }
-}
+};// test commit
 req.send(null);
