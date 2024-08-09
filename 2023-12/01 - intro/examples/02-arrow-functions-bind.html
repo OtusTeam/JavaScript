@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arrow function binding</title>
+    <style>
+      .opening {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box open">Блок</div>
+    <script>
+      const box = document.querySelector(".box");
+      // Подписываемся на клик по блоку
+      // box.addEventListener("click", function() {
+      //     // переключаем класс
+      //     this.classList.toggle("opening");
+      //     setTimeout(
+      //         function(){
+      //             // переключаем обратно
+      //             this.classList.toggle("opening");
+      //         },
+      //         500,
+      //     );
+      // });
+      box.addEventListener("click", function () {
+        this.classList.toggle("opening");
+        setTimeout(() => {
+          this.classList.toggle("opening");
+        }, 500);
+      });
+    </script>
+
+    <script>
+    //   const button = document.querySelector("btn");
+    //   button.addEventListener("click", () => {
+    //     // error: *this* ссылается на `window`
+    //     this.classList.toggle("on");
+    //   });
+
+    //   const person1 = {
+    //     age: 10,
+    //     grow: function () {
+    //       this.age++;
+    //       console.log(this.age);
+    //     },
+    //   };
+
+    //   person1.grow();
+      // // 11
+
+    //   const person2 = {
+    //     age: 10,
+    //     grow: () => {
+    //       // error: *this* refers to the `Window` Object
+    //       this.age++;
+    //       console.log(this.age);
+    //     },
+    //   };
+
+      // person2.grow();
+    </script>
+    <script>
+      function example() {
+        console.log(arguments[0]);
+      }
+
+      example(1, 2, 3);
+
+      // const showWinner = () => {
+      //     const winner = arguments[0];
+      //     console.log(`${winner} was the winner`)
+      // };
+      // showWinner( "Usain Bolt", "Justin Gatlin", "Asafa Powell" );
+
+      // const showWinner = (...args) => {
+      // const winner = args[0];
+      // console.log(`${winner} was the winner`)
+      // }
+      // showWinner("Usain Bolt", "Justin Gatlin", "Asafa Powell" );
+    </script>
+  </body>
+</html>
