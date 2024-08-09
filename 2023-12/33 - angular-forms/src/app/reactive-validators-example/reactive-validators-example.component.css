@@ -1,0 +1,15 @@
+.form-row {
+  margin-bottom: 20px;
+}
+
+.ng-valid {
+  background-color: rgba(0, 255, 0, 0.1);
+}
+
+.ng-invalid {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.ng-pending {
+  background-color: rgba(0, 0, 255, 0.1);
+}

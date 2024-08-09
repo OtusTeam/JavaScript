@@ -1,0 +1,24 @@
+{
+  "name": "examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier . --write",
+    "prettier:ci": "prettier . --check"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
+    "prettier": "3.2.5",
+    "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "@types/node": "^20.11.25",
+    "reflect-metadata": "^0.2.1"
+  }
+}

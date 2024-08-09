@@ -1,0 +1,11 @@
+<div class="login-form">
+  <div class="row">
+    <input type="text" [(ngModel)]="login" />
+  </div>
+  <div class="row">
+    <input type="password" [(ngModel)]="password" />
+  </div>
+  <div class="row">
+    <button (click)="onLogin.emit({login, password})">Login</button>
+  </div>
+</div>

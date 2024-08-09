@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
+  <label for="nameId">Name:&nbsp;</label>
+  <input type="text"
+         id="nameId"
+         name="name"
+         [(ngModel)]="user.userName"
+         #nameInput="ngModel"
+         required>
+  <div [hidden]="nameInput.valid || nameInput.pristine">Name is required</div>
+  <div *ngIf="myForm.invalid">Form contains errors</div>
+</form>

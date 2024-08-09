@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  background-color: lightcoral;
+
+  justify-content: center;
+
+  height: 200px;
+}
+
+button {
+  background-color: red;
+}

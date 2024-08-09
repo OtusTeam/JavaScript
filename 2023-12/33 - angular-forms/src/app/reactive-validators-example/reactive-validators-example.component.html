@@ -1,0 +1,31 @@
+<div class="form-row">
+  <label>
+    Name:
+    <input type="text" [formControl]="name">
+  </label>
+  <br>
+  <span [hidden]="name.valid">
+    {{name.errors | json}}
+  </span>
+</div>
+
+<div class="form-row">
+  <label class="">
+    Name (not Margaret):
+    <input type="text" [formControl]="anotherName">
+  </label>
+</div>
+
+<div class="form-row">
+  <label class="">
+    Name (not Alice and Bob):
+    <input type="text" [formControl]="notBadName">
+  </label>
+</div>
+
+<div class="form-row">
+  <label class="">
+    Even length name:
+    <input type="text" [formControl]="evenLengthName">
+  </label>
+</div>

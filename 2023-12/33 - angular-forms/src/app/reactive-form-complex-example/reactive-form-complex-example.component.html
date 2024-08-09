@@ -1,0 +1,20 @@
+<form [formGroup]="userForm">
+  <div class="form-row">
+    <label>
+      Name:
+      <input type="text" formControlName="name">
+    </label>
+  </div>
+  <div *ngFor="let friend of friends.controls" class="form-row">
+    <label>
+      Friend:
+      <input type="text" [formControl]="friend">
+    </label>
+  </div>
+  <div class="form-row">
+    <button (click)="addFriend()">Add friend</button>
+  </div>
+  <div class="form-row">
+    Form value: {{userForm.value | json }}
+  </div>
+</form>

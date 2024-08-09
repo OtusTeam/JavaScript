@@ -1,0 +1,10 @@
+<p>login works!</p>
+{{userService.getUserName() | shortname}}
+<div appHighlight >
+  <span [hidden]="isHidden" >
+    {{'3.6' | number: '1.0-0' }}
+  </span>
+</div>
+
+<button (click)="onButtonClick()">{{isHidden ? "Show" : "Hide" }}</button>
+

@@ -1,0 +1,51 @@
+/*
+
+const searchInput = document.getElementById('search')
+fromEvent(searchInput, 'input')
+   .subscribe(e => console.log(`Response: ${e.target.value}`))
+
+
+const numbers$ = fromEvent(document.getElementById("numbers"), 'mousedown')
+.pipe(scan(count => count + 1, 0))
+const letters$ = fromEvent(document.getElementById("letters"), 'mousedown')
+.pipe(scan(count => count + 1, 0))
+  
+
+numbers$
+  .pipe(source => combineLatest(source, letters$))
+  .subscribe(e => console.log(`Clicks numbers: ${e[0]} letters: ${e[1]}`))
+
+
+
+
+const obs$ = new Subject();
+const products = ['Красная машина', 'Красный велосипед', 'Синяя машина']
+
+const getProducts = (searchPattern) => {
+  console.log(`Server recieved the search request '${searchPattern}'`)  
+  return new Promise((resolve) => 
+                     setTimeout(() => resolve(products.filter(item =>                                                               item.toLowerCase().includes(searchPattern.toLowerCase()))), 1000))
+}
+  
+const repeatLatestWhen = (notifier$) =>
+  (inputSource) =>
+    combineLatest(
+      inputSource,
+      notifier$.pipe(startWith(null))
+    ).pipe(
+      // tap(([sourceValue, notifierValue]) => console.log('tap', sourceValue, notifierValue)),
+      map(([sourceValue, notifierValue]) => sourceValue),
+    );
+
+document.getElementById('refresh').addEventListener('click', () => obs$.next())
+
+fromEvent(document.getElementById('search'), 'input')
+  .pipe(
+    map(e => e.currentTarget.value),
+    debounceTime(500),
+    distinctUntilChanged(),
+    repeatLatestWhen(obs$),
+    switchMap(value => getProducts(value))
+  )
+  .subscribe(value => console.log(`Response: ${value}`))
+*/

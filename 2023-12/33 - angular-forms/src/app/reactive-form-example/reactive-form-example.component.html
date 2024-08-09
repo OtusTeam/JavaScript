@@ -1,0 +1,25 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <label>
+      Name:
+      <input type="text" formControlName="name">
+    </label>
+  </div>
+  <div class="form-row">
+    <label>
+      E-mail:
+      <input type="text" formControlName="email">
+    </label>
+  </div>
+  <div class="form-row">
+    Current Values:
+    &laquo;{{userForm.get('name')?.value}}&raquo;,
+    &laquo;{{userForm.value.email}}&raquo;
+  </div>
+  <div class="form-row">
+    Form value: {{userForm.value | json }}
+  </div>
+  <div class="form-row">
+    <button (click)="partialReset()">Partial reset</button>
+  </div>
+</form>

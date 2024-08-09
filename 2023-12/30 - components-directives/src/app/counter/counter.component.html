@@ -1,0 +1,10 @@
+
+<p [hidden]="internalCounter % 2 === 0">{{internalCounter}}</p>
+<p *ngIf="internalCounter % 2 !== 0">{{internalCounter}}</p>
+<p [ngStyle]="{'font-size': '20px'}" >{{someProperty}}</p>
+<div>{{value}}</div>
+
+
+<button appTooltip="Click me please" (click)="count($event)">Count</button>
+
+<button appAuthorize="Admin">Only Admin Clicked</button>

@@ -1,0 +1,14 @@
+<div>
+  <div class="form-row">
+    <label>
+      Name:
+      <input type="text" [formControl]="name">
+    </label>
+  </div>
+  <div class="form-row">
+    Current Value: &laquo;{{name.value}}&raquo;
+  </div>
+  <div class="form-row">
+    <button (click)="resetName()">Reset name</button>
+  </div>
+</div>

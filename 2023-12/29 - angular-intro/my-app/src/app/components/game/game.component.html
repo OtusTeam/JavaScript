@@ -1,0 +1,12 @@
+<p appWakaWaka>game works! {{text}}</p>
+
+<div *ngIf="isVisible">Test Rendering</div>
+
+
+<button (click)="isVisible = !isVisible">Show/Hide</button>
+
+<span *ngFor="let episode of episodes">
+{{episode}}
+</span>
+
+
