@@ -1,0 +1,36 @@
+<div class="form">
+    <form #fancyForm="ngForm" (ngSubmit)="doSomething(fancyForm)">
+        <div>
+            <label> Наименование товара</label>
+            <input type="text" name="name" required [(ngModel)]="model.name" placeholder="Введите название товара" />
+        </div>
+        <div>
+            <label> Количество товара</label>
+            <input required [(ngModel)]="model.quantity" name="quantity" type="number" placeholder="Введите кол-во товара" />
+        </div>
+        <div>
+            <label> Адрес для выставления счета</label>
+            <textarea #txtAddressForInvoice="ngModel" required minlength="10" [(ngModel)]="model.addressForInvoice" name="addressForInvoice" placeholder="Адрес"></textarea>
+            
+            @if(txtAddressForInvoice.touched && txtAddressForInvoice.hasError('required')){
+                <pre class="alarm">Поле должно быть заполнено</pre>
+            }
+            @if(txtAddressForInvoice.touched && txtAddressForInvoice.hasError('minlength')){
+                <pre class="alarm">Поле должно иметь минимальную длину в 10 символов</pre>
+            }
+        </div>
+        <div>
+            <label>Адрес доставки совпадает с адресом счет</label>
+            <input [(ngModel)]="model.sameAddressForDelivery" name="sameAddressForDelivery" type="checkbox" />
+        </div>
+        <div>
+            <label> Адрес для доставки</label>
+            <textarea [(ngModel)]="model.addressForDelivery" name="addressForDelivery" placeholder="Адрес"></textarea>
+
+        </div>
+        <button type="submit" [disabled]="!fancyForm.valid">Отправить</button>
+        <!-- <button type="button" (click)="model.name=model.name.toLocaleUpperCase()">Поменять имя</button> -->
+<br/>
+        {{model|json}}
+    </form>
+</div>

@@ -1,0 +1,24 @@
+<h1>Live Single Repo</h1>
+<div>appComponentCounter: {{appComponentCounter}}</div>
+
+<div>
+  <input [value]="10" (input)="onInputChange($event)"/>
+</div>
+
+
+
+<app-wrapper-ng-content>
+  <div #firstElement>First Input Data</div>
+  <div second>Second Input Data</div>
+</app-wrapper-ng-content>
+
+<app-wrapper-ng-template>
+  <ng-template>
+    <app-counter [counter]="0"></app-counter>
+  </ng-template>
+</app-wrapper-ng-template>
+
+
+<app-roles></app-roles>
+
+

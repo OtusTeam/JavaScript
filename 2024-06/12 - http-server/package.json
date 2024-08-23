@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nlapshin/nodejs-http.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nlapshin/nodejs-http/issues"
+  },
+  "homepage": "https://github.com/nlapshin/nodejs-http#readme",
+  "devDependencies": {
+    "devcert": "^1.2.2",
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "find-my-way": "^7.0.0",
+    "http-raw-request": "^2.0.2"
+  }
+}

@@ -1,0 +1,15 @@
+<div>
+    <form id="form" #fancyForm="ngForm" (ngSubmit)="submit()">
+        <div>
+            <label> Имя</label>
+            <input name="first-name" id="first-name" [(ngModel)]=" model.firstName" />
+        </div>
+        <div>
+            <label> Фамилия</label>
+            <input name="last-name" id="last-name" [(ngModel)]=" model.lastName" />
+        </div>
+        <div>
+            <button id="submit-btn" type="submit" >Submit</button>
+        </div>
+    </form>
+</div>

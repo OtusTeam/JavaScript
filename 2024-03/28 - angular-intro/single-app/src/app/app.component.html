@@ -1,0 +1,30 @@
+<h1>Передача данных. Сервисы и состояния.</h1>
+<div>appComponentCounter: {{appComponentCounter}}</div>
+<div>initialCounter: {{initialCounter}}</div>
+<input [value]="initialCounter" (input)=onInputChange($event)>
+
+<app-counter [counter]="initialCounter" (counterChange)="appComponentCounter = $event"></app-counter>
+
+<app-wrapper>
+  <div #textElement>First Content</div>
+  <div second>Second Content</div>
+</app-wrapper>
+
+<app-wrapper-ng-template>
+  <ng-template>
+    <app-counter [counter]="0"></app-counter>
+  </ng-template>
+</app-wrapper-ng-template>
+
+
+<div>
+  <input #roleName/>
+  <br/>
+  <br/>
+  <button (click)="rolesService.addRole(roleName.value)">Add Role</button>
+  <br/>
+  <br/>
+  <div *ngFor="let role of rolesService.getRoles()">
+    {{role}}
+  </div>
+</div>

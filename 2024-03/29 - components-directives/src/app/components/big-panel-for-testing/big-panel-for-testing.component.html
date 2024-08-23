@@ -1,0 +1,41 @@
+<div class="purple-blue">
+    <H1>Привет я компонента</H1>
+
+    <div>
+        <input #inputVal type="text">
+        <button (click)="send()">Отправить</button>
+    </div>
+
+    <div *ngIf="inputText.length > 2" style="border: 2px dotted red">
+    Я СУЩЕСТВУЮ
+    </div>
+
+
+    <ul>
+        <li *ngFor="let a of array" >{{a}}</li>
+    </ul>
+
+
+
+
+    <button (click)="clickHandle()">Кликни меня {{counter}}</button>
+
+    {{ inputText }}
+    <br />
+
+<button (click)="available=!available">Спрятать</button>
+<br/>
+    <app-info-for-text *ngIf="available" [fancyText]="inputText" (somethingHappened)="alarm($event)" />!
+    <!-- 
+    {{ getDate() }} -->
+    <br />
+
+    <ul class="cvet">
+        <li >Белый Бим Черное ухо</li>
+        <li appWhiteColor>Белый Бим Черное ухо</li>
+        <li appWhiteColor [borderColor]="'yellow'">Белый Бим Черное ухо</li>
+        <li appBlackBack>Белый Бим Черное ухо</li>
+        <li  appWhiteColor appBlackBack>Белый Бим Черное ухо</li>
+    </ul>
+
+</div>

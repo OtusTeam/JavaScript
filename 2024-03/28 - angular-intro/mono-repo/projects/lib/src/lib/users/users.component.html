@@ -1,0 +1,7 @@
+<div>
+  <input id="search" />
+
+  <div *ngFor="let user of users$ | async">
+    {{user.login}}
+  </div>
+</div>

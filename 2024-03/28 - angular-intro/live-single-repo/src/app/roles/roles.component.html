@@ -1,0 +1,17 @@
+<div [style]="{marginTop: '24px'}">
+  <h2>Roles</h2>
+  <input #roleElement />
+  <div [style]="{marginTop: '12px'}">
+    <button (click)="rolesService.addRole(roleElement.value)">
+      Add Role
+    </button>
+    <button
+      [style]="{marginLeft: '12px'}"
+      (click)="rolesService.cleanRoles()">Clean Roles</button>
+  </div>
+
+  <div *ngFor="let role of rolesService.getRoles()" [style]="{marginTop: '12px'}">
+    {{role}}
+  </div>
+
+</div>

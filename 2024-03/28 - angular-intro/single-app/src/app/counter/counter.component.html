@@ -1,0 +1,9 @@
+<h2>Counter Component</h2>
+<div>internalCounter: {{internalCounter}}</div>
+
+<button (click)="onCountClick()">Count</button>
+
+
+<div *ngFor="let role of roleService.getRoles()">
+  {{role}}
+</div>

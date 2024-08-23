@@ -1,0 +1,60 @@
+<div class="form">
+    <form [formGroup]="fancyGroup" (ngSubmit)="doSomething()">
+        <div>
+            <label> Наименование товара</label>
+            <input formControlName="name" type="text"  placeholder="Введите название товара" />
+        </div>
+        <div>
+            <label> Количество товара</label>
+            <input required formControlName="quantity" type="number" placeholder="Введите кол-во товара" />
+        </div>
+        <div>
+            <label> Адрес для выставления счета</label>
+            <textarea  formControlName="addressForInvoice" placeholder="Адрес"></textarea>
+            
+            @if(fancyGroup.get('addressForInvoice')!.touched && fancyGroup.get('addressForInvoice')!.hasError('required')){
+                <pre class="alarm">Поле должно быть заполнено</pre>
+            }
+
+            @if(addressForInvoice.touched && addressForInvoice.hasError('minlength')){
+                <pre class="alarm">Поле должно иметь минимальную длину в 10 символов</pre>
+            }
+        </div>
+        <div>
+            <label>Адрес доставки совпадает с адресом счет</label>
+            <input formControlName="sameAddressForDelivery" type="checkbox" />
+        </div>
+        <div>
+            <label> Адрес для доставки</label>
+            <textarea  formControlName="addressForDelivery" placeholder="Адрес"></textarea>
+
+        </div>
+        <div>
+            <label>Хочу зарегистрироваться</label>
+                <input formControlName="want2Register" type="checkbox" />
+        </div>
+        <div>
+            <form   [formGroup]="nestedGroup" (ngSubmit)="nested()">
+                <div>
+                    <label> Email</label>
+                    <input formControlName="email" type="text"   />
+                    @if(email.touched && email.hasError('requiredIfWant2Register')){
+                        <pre class="alarm">обязательно при регистрации</pre>
+                    }
+                </div>
+                <div>
+                    <label> Пароль</label>
+                    <input  formControlName="password" type="password" />
+                    @if(password.touched && password.hasError('requiredIfWant2Register')){
+                        <pre class="alarm">обязательно при регистрации</pre>
+                    }
+                </div>
+                <button type="submit" >Кнопка внутри</button>
+            </form>
+        </div>
+        <button type="submit" [disabled]="!fancyGroup.valid">Отправить</button>
+        <!-- <button type="button" (click)="model.name=model.name.toLocaleUpperCase()">Поменять имя</button> -->
+<br/>
+   {{fancyGroup.errors|json}}
+    </form>
+</div>

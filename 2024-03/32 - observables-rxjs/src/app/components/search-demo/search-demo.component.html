@@ -1,0 +1,7 @@
+<input #filterText type="text" />
+<br/>
+<ul>
+    @for(d of filteredData$|async; track d){
+        <li>{{d}}</li>
+    }
+</ul>

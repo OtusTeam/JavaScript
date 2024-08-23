@@ -1,0 +1,37 @@
+<!--  <editable-list
+        title="TODO empty"
+        footer="-- custom footer ---"
+        listItem="This will not appear"
+        add-item-text="Add new list item:"
+    >
+    </editable-list>
+ -->
+<div id="aaa">
+ <editable-list
+        title="TODO with 10 elements"
+        list-item-0="First item on the list"
+        list-item-1="Second item on the list"
+        listItem="This will not appear"
+        add-item-text="Add new list item:"
+    >
+   
+    <form><input><button>click</button></form>
+    </editable-list>
+
+</div>
+
+<div id="bbb">
+ <editable-list
+        id="main"
+        title="TODO with 1 element"
+        disableRemoval="true"
+        list-item-0="First item on the list"
+        list-item-1="Second item on the list"
+        listItem="This will not appear"
+        add-item-text="Add new list item:"
+    >
+   <p>это список дел который я не собираюсь выполнять</p>
+    </editable-list>
+
+<button type="button" onClick="changeAttrOnToDoList()">I will change title of todo-list</button>
+</div>

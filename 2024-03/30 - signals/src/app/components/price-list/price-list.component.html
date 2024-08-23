@@ -1,0 +1,14 @@
+<ul>
+    @for(p of listService.listSignal(); track p){
+        <li>{{p.name}}: {{p.price}}</li>
+    }
+</ul>
+Total price: {{totalPrice()}}
+<br/>
+{{now()}}
+<br/>
+
+<button (click)="incr()">Click me {{counter()}}</button>
+
+<button (click)="destroy()">Destroy effect</button>
+<button #meButton>Me</button>

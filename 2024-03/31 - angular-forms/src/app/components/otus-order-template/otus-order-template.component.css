@@ -1,0 +1,14 @@
+.form{
+    margin: auto 30% ;
+}
+
+label{
+    display: block;
+}
+:not(form).ng-invalid.ng-touched{
+    border-color:red;
+}
+
+.alarm {
+    color:red;
+}

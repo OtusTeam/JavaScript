@@ -1,0 +1,10 @@
+<h2>Wrapper ng-template</h2>
+<div *ngIf="isVisible else isHide">
+  <ng-container [ngTemplateOutlet]="template"></ng-container>
+</div>
+<button (click)="isVisible = !isVisible">Show </button>
+
+
+<ng-template #isHide>
+  <div> if else</div>
+</ng-template>

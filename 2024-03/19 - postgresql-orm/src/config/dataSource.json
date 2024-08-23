@@ -1,0 +1,11 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "username": "postgres",
+    "password": "postgres",
+    "port": 5432,
+    "database": "otus_fancy",
+    "entities": ["./src/db/entities/*.entity{.ts,.js}"],
+    "migrationsTableName":"__migrations",
+    "migrations":["./src/db/migrations"]
+}

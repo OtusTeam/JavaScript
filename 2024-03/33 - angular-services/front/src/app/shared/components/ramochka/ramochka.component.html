@@ -1,0 +1,8 @@
+<div class="ramka" [ngStyle]="{
+    'background-color': theme()?.background,
+     color:theme()?.front,
+    'border-color':theme()?.front}">
+    <span [ngStyle]="{ color:theme()?.front}"> Вот вам текст </span>
+
+    <button (click)="log()" style="background-color: white; color:black">ЛОГ</button>
+</div>

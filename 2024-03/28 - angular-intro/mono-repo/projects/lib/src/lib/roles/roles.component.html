@@ -1,0 +1,6 @@
+<h2>Roles</h2>
+<input #search (input)="onInput($event)" />
+
+<div *ngFor="let role of roles | async ">
+  {{role.name}}
+</div>

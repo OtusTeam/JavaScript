@@ -1,0 +1,12 @@
+button {
+  background: red;
+}
+body {
+  font-size:20px
+}
+div#aaa {
+  --main-bg-color: #fc0
+}
+/* div#bbb {
+  --main-bg-color: red
+} */

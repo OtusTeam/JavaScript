@@ -1,0 +1,26 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: gray;
+
+  button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: none;
+  padding: 50px;
+  border-radius: 28px;
+  font-size: 72px;
+  font-weight: 900;
+  cursor: pointer;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+
+    &:active {
+      background-color: azure;
+    }
+  }
+}
+
